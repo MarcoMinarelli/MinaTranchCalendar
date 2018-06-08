@@ -21,4 +21,21 @@ Time::Time(int h, int m, int s) {
 	}
 }
 
+<<<<<<< HEAD
+Time::~Time() {
+}
+
+int Time::getHours() const {
+	return hours;
+}
+
+int Time::getMinutes() const {
+	return minutes;
+}
+
+int Time::getSeconds() const {
+	return seconds;
+}
+=======
 Time::~Time() {}
+>>>>>>> fa7914b284aad6b21d9e06d16d9785240d1c6c9b
