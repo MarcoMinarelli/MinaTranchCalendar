@@ -8,7 +8,12 @@
 #include "Time.h"
 
 
-
+/**
+	Costructor
+	@param h: the hour of the day [0, 23]
+	@param m: the minute of the hour [1, 60]
+	@þaram s: the seconds in the minutes [1, 60]
+*/
 Time::Time(int h, int m, int s) {
 	if(h > 0 && h < 24){
 		hours = h;
@@ -21,10 +26,11 @@ Time::Time(int h, int m, int s) {
 	}
 }
 
-<<<<<<< HEAD
-Time::~Time() {
-}
+Time::~Time() { }
 
+/**
+	The followng methods are easy getters
+*/
 int Time::getHours() const {
 	return hours;
 }
@@ -36,6 +42,4 @@ int Time::getMinutes() const {
 int Time::getSeconds() const {
 	return seconds;
 }
-=======
 Time::~Time() {}
->>>>>>> fa7914b284aad6b21d9e06d16d9785240d1c6c9b
