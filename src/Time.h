@@ -30,7 +30,6 @@ public:
 	int getSeconds() const {
 		return seconds;
 	}
->>>>>>> fa7914b284aad6b21d9e06d16d9785240d1c6c9b
 
 private:
 	int hours;
