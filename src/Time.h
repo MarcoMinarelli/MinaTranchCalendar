@@ -13,11 +13,10 @@ class Time {
 public:
 	Time(int h, int m, int s);
 	virtual ~Time();
-<<<<<<< HEAD
+	
 	int getHours() const;
 	int getMinutes() const;
 	int getSeconds() const;
-=======
 
 	int getHours() const {
 		return hours;
