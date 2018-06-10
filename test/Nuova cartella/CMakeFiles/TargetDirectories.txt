@@ -1,7 +1,0 @@
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/rebuild_cache.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/edit_cache.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/DateTimeTests.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/lib/googletest/CMakeFiles/rebuild_cache.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/lib/googletest/CMakeFiles/edit_cache.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/lib/googletest/CMakeFiles/gtest_main.dir
-/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/lib/googletest/CMakeFiles/gtest.dir

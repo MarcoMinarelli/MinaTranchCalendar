@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/runGameCharacterTests.dir/runAllTests.cpp.o CMakeFiles/runGameCharacterTests.dir/DateTest.cpp.o CMakeFiles/runGameCharacterTests.dir/TimeTest.cpp.o  -o runGameCharacterTests lib/googletest/libgtest.a lib/googletest/libgtest_main.a -lcore lib/googletest/libgtest.a -pthread 
