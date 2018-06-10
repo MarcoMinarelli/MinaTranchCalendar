@@ -2,7 +2,7 @@
  * Time.h
  *
  *  Created on: 06 giu 2018
- *      Author: Minarelli
+ *      Author: Tranchino
  */
 
 #ifndef SRC_TIME_H_
@@ -18,17 +18,7 @@ public:
 	int getMinutes() const;
 	int getSeconds() const;
 
-	int getHours() const {
-		return hours;
-	}
-
-	int getMinutes() const {
-		return minutes;
-	}
-
-	int getSeconds() const {
-		return seconds;
-	}
+//rimossa la definizione dei metodi
 
 private:
 	int hours;
