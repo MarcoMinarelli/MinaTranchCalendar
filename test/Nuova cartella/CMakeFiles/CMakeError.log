@@ -1,0 +1,35 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_14968/fast"
+/usr/bin/make -f CMakeFiles/cmTC_14968.dir/build.make CMakeFiles/cmTC_14968.dir/build
+make[1]: ingresso nella directory "/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/CMakeTmp"
+Building C object CMakeFiles/cmTC_14968.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_14968.dir/CheckSymbolExists.c.o   -c /home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_14968
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_14968.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_14968.dir/CheckSymbolExists.c.o  -o cmTC_14968 
+CMakeFiles/cmTC_14968.dir/CheckSymbolExists.c.o: nella funzione "main":
+CheckSymbolExists.c:(.text+0x16): riferimento non definito a "pthread_create"
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_14968.dir/build.make:97: set di istruzioni per l'obiettivo "cmTC_14968" non riuscito
+make[1]: *** [cmTC_14968] Errore 1
+make[1]: uscita dalla directory "/home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/CMakeTmp"
+Makefile:126: set di istruzioni per l'obiettivo "cmTC_14968/fast" non riuscito
+make: *** [cmTC_14968/fast] Errore 2
+
+File /home/marco/eclipse-workspace/Minarelli_Tranchino_Calendar/master/test/test_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

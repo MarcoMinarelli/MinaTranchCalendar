@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/DateTimeTests.dir/runAllTests.cpp.o  -o DateTimeTests lib/googletest/libgtest.a lib/googletest/libgtest_main.a -lcore lib/googletest/libgtest.a -pthread 
