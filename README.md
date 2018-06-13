@@ -1,9 +1,9 @@
 # MinaTranchCalendar
 
-This is a project born for a programming exam at Unersity of Florence.
+This is a project born for a programming exam at University of Florence.
 
 ## Prerequisites
-In order to use this applciation, is necessary to have installed qt library.
+In order to use this application, is necessary to have installed qt library.
 Under Linux distros, this can be achieved with
 ```
   sudo apt-get install qt5-default
@@ -18,9 +18,9 @@ or
 ```
 
 ## Built with
-Eclipse - C++ IDE
-CMake - Build tool
-Qt - UI library
+* Eclipse - C++ IDE
+* CMake - Build tool
+* Qt - UI library
 
 ## Authors
 * **Marco Minarelli* 
