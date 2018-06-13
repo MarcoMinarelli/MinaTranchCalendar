@@ -23,5 +23,5 @@ or
 * Qt - UI library
 
 ## Authors
-* **Marco Minarelli* 
-* **William Tranchino* 
+* **Marco Minarelli* * 
+* **William Tranchino** 
