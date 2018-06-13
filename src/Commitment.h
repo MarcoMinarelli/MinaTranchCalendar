@@ -1,8 +1,9 @@
 /*
  * Commitment.h
  *
- *  Created on: 08 giu 2018
+ *  Created on: 08 June 2018
  *      Author: Minarelli
+ *		Coauthor:Tranchino
  */
 
 #ifndef SRC_COMMITMENT_H_

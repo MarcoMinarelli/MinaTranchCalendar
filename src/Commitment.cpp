@@ -1,8 +1,9 @@
 /*
  * Commitment.cpp
  *
- *  Created on: 08 giu 2018
- *      Author: Minarelli
+ *  Created on: 08 June 2018
+ *      Author:Minarelli
+ *      Coauthor:Tranchino
  */
 
 #include "Commitment.h"
@@ -42,8 +43,8 @@ Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat
 	std::list<User> involvedUsers;
 };
 
-
-Commitment::~Commitment() { }
+//FIXME fix the destructor
+//Commitment::~Commitment() { }
  /**
  	The following methods are getters
  */

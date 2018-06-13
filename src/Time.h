@@ -1,8 +1,9 @@
 /*
  * Time.h
  *
- *  Created on: 06 giu 2018
- *      Author: Tranchino
+ *  Created on: 06 June 2018
+ *      Author: Minarelli
+ *      Coauthor:Tranchino
  */
 
 #ifndef SRC_TIME_H_
@@ -21,9 +22,9 @@ public:
 //rimossa la definizione dei metodi
 
 private:
-	int hours;
-	int minutes;
-	int seconds;
+	short unsigned int hours;
+	short unsigned int minutes;
+	short unsigned int seconds;
 };
 
 

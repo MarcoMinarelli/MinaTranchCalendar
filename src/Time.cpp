@@ -3,6 +3,7 @@
  *
  *  Created on: 06 giu 2018
  *      Author: Minarelli
+ *      Co-author:Tranchino
  */
 
 #include "Time.h"
@@ -14,7 +15,7 @@
 	@param m: the minute of the hour [1, 60]
 	@þaram s: the seconds in the minutes [1, 60]
 */
-Time::Time(int h, int m, int s) {
+Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) {
 	if(h > 0 && h < 24){
 		hours = h;
 	}
