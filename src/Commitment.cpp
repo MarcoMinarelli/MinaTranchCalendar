@@ -20,7 +20,7 @@
 	@param users: list of the users that will be involved in th commitment
 */
 Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
-			std::string note, std::string u, std::list<User> users) :
+			std::string note, std::string u, std::list< std::shared_ptr<User> > users) :
 			startDate(start), endDate(end), startTime(startT),
 			endTime(endT), repeated(repeat), notes(note),
 			url(u), involvedUsers(users){};
@@ -39,9 +39,7 @@ Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat
 			std::string note, std::string u) :
 			startDate(start), endDate(end), startTime(startT),
 			endTime(endT), repeated(repeat), notes(note),
-			url(u){
-	std::list<User> involvedUsers;
-};
+			url(u), involvedUsers() {};
 
 //FIXME fix the destructor
 //Commitment::~Commitment() { }
@@ -56,7 +54,7 @@ const Time& Commitment::getEndTime() const {
 	return endTime;
 }
 
-const std::list<User>& Commitment::getInvolvedUsers() const {
+const std::list< std::shared_ptr<User> >& Commitment::getInvolvedUsers() const {
 	return involvedUsers;
 }
 

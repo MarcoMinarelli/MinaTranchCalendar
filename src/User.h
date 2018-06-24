@@ -10,18 +10,15 @@
 
 #include <vector>
 
-
 #include "ActivityList.h"
 
-
-//TODO implement
 class User {
 public:
 	User();
 	virtual ~User();
-	void addCategory(Category aCategory);
-	void removeCategory(std::string name);
-	vector<Category> getCategories();
+	void addActivityList(ActivityList al);
+	void removeActivityList(std::string name);
+	std::vector<ActivityList> getActivityLists();
 	
 private:
 	std::vector<ActivityList> categories;

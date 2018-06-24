@@ -23,7 +23,7 @@ public:
 	const std::multimap<Date, Commitment>& getCommitments() const;
 	const std::string& getDescription() const;
 	const std::string& getName() const;
-	bool operator == (const Activity& right) const;
+	bool operator == (const ActivityList& right) const;
 
 
 private:

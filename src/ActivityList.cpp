@@ -28,10 +28,9 @@ void ActivityList::addCommitment(Commitment toAdd){
 	commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
 }
 
-bool operator == (const Activity& right) const{
+bool ActivityList::operator == (const ActivityList& right) const{
 	return (description == right.description) && (name == right.name);
 }
-
 
 /**
 	The following methods are getters

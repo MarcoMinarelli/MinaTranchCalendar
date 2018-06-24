@@ -12,7 +12,7 @@
 
 class Time {
 public:
-	Time(int h, int m, int s);
+	explicit Time(short unsigned int h, short unsigned int m, short unsigned int s);
 	virtual ~Time();
 	
 	int getHours() const;

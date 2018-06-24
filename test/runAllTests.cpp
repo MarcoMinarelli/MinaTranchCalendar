@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "../src/Date.h"
+/*#include "../src/Date.h"
 #include "../src/Time.h"
 
 TEST(Time, Constructor) {
@@ -26,7 +26,7 @@ TEST(Date, minorityOperator) {
     Date d3(14, 01, 2016) ;
     ASSERT_FALSE(d1< d3);
 }
-
+*/
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

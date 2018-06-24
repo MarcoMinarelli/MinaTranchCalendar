@@ -7,47 +7,48 @@
 
 #include <sys/stat.h>
 #include <fstream>
+#include <algorithm>
 
 #include "User.h"
 
 
 User::User() {
 	std::ifstream infile;
-	infile.open("user.dat", ios::binary | ios::in);
+	infile.open("user.dat", std::ios::binary | std::ios::in);
 	if(!infile){ //if the file is not present, it is created
-		outfile.open("user.dat", ios::binary | ios::out);
+		outfile.open("user.dat", std::ios::binary | std::ios::out);
 		outfile.close();
 	}else{
-		int fileLenght;
+		/*int fileLenght;
 		struct stat results;
 		if (stat("user.dat", &results) == 0){
 			fileLenght = results.st_size;
 		}
-		infile.read(&categories, fileLenght);
+		infile.read(&categories, fileLenght);*/
+		//infile >> categories;
 	}
 }
 
 User::~User() { }
 
-void User::addCategory(Category aCategory){
-	auto it = find (categories.begin(), categories.end(), aCategory);
-	if(it = categories.end){
-		categories.push_back(aCategory);
+void User::addActivityList(ActivityList al){
+	if(std::find(categories.begin(), categories.end(), al) == categories.end() ){
+		categories.push_back(al);
 	}
 }
 
-void User::removeCategory(std::string name){
+void User::removeActivityList(std::string aName){
 	int pos = 0;
 	for(auto it : categories){
 		pos ++;
-		if (it.getName == name){
+		if (it.getName() == aName){
 			break;
 		}
 	}
-	categories.erase(pos);
+	categories.erase(categories.begin() + pos);
 }
 
-vector<Category> User::getCategories(){
+std::vector<ActivityList> User::getActivityLists(){
 	return categories;
 }
 

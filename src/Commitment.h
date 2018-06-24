@@ -11,20 +11,25 @@
 
 #include <iostream>
 #include <list>
+#include <memory>
 
 #include "Date.h"
 #include "Time.h"
-#include "User.h"
+//#include "User.h"
+
+class User;
 
 class Commitment {
 public:
-	Commitment(Date start, Date end, Time strartT, Time endT, bool repeat,
-			std::string note, std::string url, std::list<User> users);
-	Commitment(Date start, Date end, Time strartT, Time endT, bool repeat,
-				std::string note, std::string url);
+
+
+	explicit Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
+			std::string note, std::string u, std::list< std::shared_ptr<User> > users);
+	explicit Commitment(Date start, Date end, Time strartT, Time endT, bool repeat,
+				std::string note, std::string u);
 	const Date& getEndDate() const;
 	const Time& getEndTime() const;
-	const std::list<User>& getInvolvedUsers() const;
+	const std::list< std::shared_ptr<User> >& getInvolvedUsers() const;
 	const std::string& getNotes() const;
 	bool isRepeated() const;
 	const Date& getStartDate() const;
@@ -39,7 +44,7 @@ private:
 	bool repeated;
 	std::string notes;
 	std::string url;
-	std::list<User> involvedUsers;
+	std::list< std::shared_ptr<User> > involvedUsers;
 };
 
 

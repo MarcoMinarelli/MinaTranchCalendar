@@ -43,4 +43,3 @@ int Time::getMinutes() const {
 int Time::getSeconds() const {
 	return seconds;
 }
-Time::~Time() {}
