@@ -16,7 +16,18 @@
  * @param aMonth: the month in the year [1, 12 ]
  * @param aYear: the year
  */
-Date::Date(int aDay, int aMonth, int aYear) : day(aDay), month(aMonth), year(aYear){}
+Date::Date(int aDay, int aMonth, int aYear) throw (std::runtime_error){
+	if(aDay < 0)
+		throw std::runtime_error("Days < 0");
+	if(aMonth < 0 || aMonth > 12)
+		throw std::runtime_error("Error in month number");
+	this->month = aMonth;
+	this->year = aYear;
+	if (aDay > getMaxDays(this->year))
+		 throw std::runtime_error("Error in number of days");
+	this->day = aDay;
+
+}
 
 Date::~Date() {
 }
@@ -44,7 +55,7 @@ int Date::getYear() const{
 	return this->year;
 };
 
-int Date::getMaxDays() {
+int Date::getMaxDays(int year) {
     short unsigned int maxDay = 31;
     switch(month) {
         case 4: //April
@@ -124,21 +135,23 @@ std::string Date::getMonthString(short unsigned int month) const {
 /**
  * Set method
  */
-void Date::setDay(int day) {
-    int maxDay = getMaxDays();
+void Date::setDay(int day) throw (std::runtime_error){
+    int maxDay = getMaxDays(this->year);
     if (day <= 0 || day>maxDay)
-        return;
+        throw std::runtime_error("Error in day");
     Date::day = day;
 }
 
-void Date::setMonth(int month) {
+void Date::setMonth(int month) throw (std::runtime_error){
     Date::month = month;
-    int maxDay = getMaxDays();
+    int maxDay = getMaxDays(this->year);
     if (day>maxDay)
         day = maxDay;
 }
 
-void Date::setYear(int year) {
+void Date::setYear(int year) throw (std::runtime_error){
+    if(day > getMaxDays(year))
+    	throw std::runtime_error("Error in day after year modify");
     Date::year = year;
 }
 

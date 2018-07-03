@@ -6,13 +6,15 @@
  *      Coauthor:Tranchino
  */
 
+#include <stdexcept>
+
 #ifndef SRC_TIME_H_
 #define SRC_TIME_H_
 
 
 class Time {
 public:
-	explicit Time(short unsigned int h, short unsigned int m, short unsigned int s);
+	explicit Time(short unsigned int h, short unsigned int m, short unsigned int s) throw(std::runtime_error);
 	virtual ~Time();
 	
 	int getHours() const;

@@ -15,16 +15,19 @@
 	@param m: the minute of the hour [1, 60]
 	@þaram s: the seconds in the minutes [1, 60]
 */
-Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) {
-	if(h > 0 && h < 24){
-		hours = h;
+Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) throw(std::runtime_error){
+	if(h < 0 || h > 24){
+		throw std::runtime_error("Error in number of hours");
 	}
-	if( m > 0 && m < 61){
-		minutes = m;
+	if( m < 0 || m > 60){
+		throw std::runtime_error("Error in number of minutes");
 	}
-	if( s > 0 && s < 61){
-			seconds = s;
+	if( s < 0 || s > 6){
+		throw std::runtime_error("Error in number of seconds");
 	}
+	hours = h;
+	minutes = m;
+	seconds = s;
 }
 
 Time::~Time() { }

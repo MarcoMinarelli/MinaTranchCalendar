@@ -17,3 +17,28 @@ TEST(Date, minorityOperator) {
     Date d3(14, 01, 2016) ;
     ASSERT_FALSE(d1< d3);
 }
+
+TEST(Date, ExceptionThrows){
+	try{
+		Date d(123, 02, 2018);
+		FAIL() << "Expected std::runtime_error";
+	}catch(std::runtime_error const & err){
+		EXPECT_EQ(err.what(),std::string("Error in number of days"));
+	}
+	
+	try{
+		Date d(1, -1, 2018);
+		FAIL() << "Expected std::runtime_error";
+	}catch(std::runtime_error const & err){
+		EXPECT_EQ(err.what(),std::string("Error in month number"));
+	}
+	
+	try{
+		Date d(1, 29, 2016);
+		d.setYear(2018);
+		FAIL() << "Expected std::runtime_error";
+	}catch(std::runtime_error const & err){
+		EXPECT_EQ(err.what(),std::string("Error in month number"));
+	}
+}
+
