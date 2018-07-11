@@ -35,6 +35,7 @@ public:
 	const Date& getStartDate() const;
 	const Time& getStartTime() const;
 	const std::string& getUrl() const;
+	bool operator == (const Commitment& right) const;
 
 private:
 	Date startDate;

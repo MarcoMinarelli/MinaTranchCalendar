@@ -20,8 +20,8 @@ public:
 	int getHours() const;
 	int getMinutes() const;
 	int getSeconds() const;
+	bool operator == (const Time& right) const;
 
-//rimossa la definizione dei metodi
 
 private:
 	short unsigned int hours;

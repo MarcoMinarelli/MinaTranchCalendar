@@ -41,6 +41,17 @@ Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat
 			endTime(endT), repeated(repeat), notes(note),
 			url(u), involvedUsers() {};
 
+
+
+bool Commitment::operator == (const Commitment& right) const{
+	return this->startDate == right.startDate &&
+		 this->endDate == right.endDate &&
+		 this->startTime == right.startTime &&
+		 this->endTime == right.endTime &&
+		 this->notes == right.notes &&
+		 this->url == right.url &&
+		 this->involvedUsers == right.involvedUsers;
+}
 //FIXME fix the destructor
 //Commitment::~Commitment() { }
  /**

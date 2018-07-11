@@ -20,6 +20,7 @@ public:
 	virtual ~ActivityList();
 
 	void addCommitment(Commitment toAdd);
+	void removeCommitment(Commitment toDelete);
 	const std::multimap<Date, Commitment>& getCommitments() const;
 	const std::string& getDescription() const;
 	const std::string& getName() const;

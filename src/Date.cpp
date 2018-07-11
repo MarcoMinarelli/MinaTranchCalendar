@@ -180,3 +180,8 @@ bool Date::operator < (const Date& right) const{
 	}
 	return true;
 }
+
+
+bool Date::operator == (const Date& right) const{
+	return this->year == right.year && this->month == right.month && this->day == right.day;
+}

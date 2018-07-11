@@ -23,7 +23,9 @@ class Date {
 		void setYear(int year) throw (std::runtime_error);
 		static Date today();
 		bool operator < (const Date& right) const;
-
+		bool operator == (const Date& right) const;
+		
+		
 	private:
 		short unsigned int day;
 		short unsigned int month;

@@ -28,6 +28,20 @@ void ActivityList::addCommitment(Commitment toAdd){
 	commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
 }
 
+/**
+	Method that allows to remove a commitment to the list. If the Commitment is not present, then nothing is done
+	@param toAdd: the commitment that will be removed
+*/
+void ActivityList::removeCommitment(Commitment toDelete){
+	for(auto it = commitments.equal_range(toDelete.getStartDate()).first; it != commitments.equal_range(toDelete.getStartDate()).second; it++){
+		if(it->second == toDelete){
+			commitments.erase(it);
+			break;
+		}
+	}
+}
+
+
 bool ActivityList::operator == (const ActivityList& right) const{
 	return (description == right.description) && (name == right.name);
 }

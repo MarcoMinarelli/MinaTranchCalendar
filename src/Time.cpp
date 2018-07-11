@@ -30,6 +30,12 @@ Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) thr
 	seconds = s;
 }
 
+
+bool Time::operator == (const Time& right) const{
+	return this->hours == right.hours && this->minutes == right.minutes && this->seconds == right.seconds;
+
+}
+
 Time::~Time() { }
 
 /**
