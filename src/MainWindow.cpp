@@ -1,7 +1,11 @@
+
+
+#include "BorderLayout.h"
 #include "MainWindow.h"
 
 MainWindow::MainWindow(User u, QWidget *parent) : user(u), QMainWindow(parent){
 	setWindowTitle("Minarelli Tranchino Calendar");
+	ActivityListWidget alw(user.getActivityLists()[0]);
    	setupUI();
 }
 
@@ -13,10 +17,14 @@ void MainWindow::setupUI(){
 	this->resize( 500, 200 );
     scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable( true );
-    //layout->addWidget( scrollArea );
-    //auto * container = new QWidget();
-    //scrollArea->setWidget( container );
-   	
+    QGridLayout gLayout;
+    for(auto b: buttons){
+    	gLayout.addWidget(buttons[i]);
+    }
+    BorderLayout mainLayout;
+    mainLayout.addWidget(alw, BorderLayout::Center);
+   	mainLayout.addLayout(gLayout, BorderLayout::South);
+   	setLayout(mainLayout);
 }
 
 void MainWindow::createButtons(){

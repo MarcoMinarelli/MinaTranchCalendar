@@ -9,6 +9,8 @@
 
 
 #include "User.h"
+#include "ActivityListWidget.h"
+
 class MainWindow : public QMainWindow{
     Q_OBJECT
 
@@ -21,6 +23,8 @@ private slots:
 private:
 	void setupUI();
 	void createButtons();
+	
+	ActivityListWidget alw;
 	std::vector<QPushButton *> buttons;
 	QScrollArea* scrollArea;
 	MainWindow *ui;
