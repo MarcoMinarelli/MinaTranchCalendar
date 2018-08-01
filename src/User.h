@@ -9,6 +9,8 @@
 #define SRC_USER_H_
 
 #include <vector>
+#include <fstream>
+#include <memory>
 
 #include "ActivityList.h"
 
@@ -16,12 +18,12 @@ class User {
 public:
 	User();
 	virtual ~User();
-	void addActivityList(ActivityList al);
+	void addActivityList(std::shared_ptr<ActivityList> al);
 	void removeActivityList(std::string name);
-	std::vector<ActivityList> getActivityLists();
+	std::vector< std::shared_ptr<ActivityList> > getActivityLists();
 	
 private:
-	std::vector<ActivityList> categories;
+	std::vector< std::shared_ptr<ActivityList> > categories;
 	std::ofstream outfile;
 };
 

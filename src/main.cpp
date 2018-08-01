@@ -1,15 +1,17 @@
+
+#include <memory>
+
 #include <QApplication>
 
 #include "MainWindow.h"
 #include "User.h"
 
 int main(int argc, char **argv){
-	User u;
-	
-	/*QApplication app (argc, argv);
-	MainWindow *newWindow = new MainWindow(u);
+	std::shared_ptr<User> ptr(new User);
+	QApplication app (argc, argv);
+	MainWindow *newWindow = new MainWindow(ptr);
     newWindow->show();
- 	return app.exec();*/
+ 	return app.exec();
  	return 0;
 }
 

@@ -1,6 +1,5 @@
+#include<QStringList>
 
-
-#include "BorderLayout.h"
 #include "MainWindow.h"
 
 MainWindow::MainWindow(User u, QWidget *parent) : user(u), QMainWindow(parent){
@@ -15,23 +14,25 @@ MainWindow::~MainWindow(){
 
 void MainWindow::setupUI(){
 	this->resize( 500, 200 );
-    scrollArea = new QScrollArea(this);
-    scrollArea->setWidgetResizable( true );
-    QGridLayout gLayout;
-    for(auto b: buttons){
-    	gLayout.addWidget(buttons[i]);
-    }
-    BorderLayout mainLayout;
-    mainLayout.addWidget(alw, BorderLayout::Center);
-   	mainLayout.addLayout(gLayout, BorderLayout::South);
+    QGridLayout leftLayout;
+    QGridLayout mainLayout;
+	// First Column
+	addButton = new QPushButton("Add Activity List");
+	removeButton = new QPushButton("Remove Activity List");
+    listModel->setStringList(createList());
+    leftLayout.addWidget(listModel, 1, 1);
+    leftLayout.addWidget(addButton, 2, 1)
+    leftLayout.addWidget(removeButton, 2, 2); 
+    mainLayout.addLayout(leftLayout, 1, 1);
+    
+    mainLayout.addWidget(alw, 1, 2);
+   	
    	setLayout(mainLayout);
 }
 
-void MainWindow::createButtons(){
-	int i = 0;
-	int lastPos = 10;
+void MainWindow::createList(){
+	QStringList list;
 	for(auto it : user.getActivityLists()){
-		buttons.push_back(new QPushButton(it->getName()));
-		buttons[i] -> setGeometry (QRect (50, lastPos+=20, 113, 20));
+		list << it->getName();
 	}
 }

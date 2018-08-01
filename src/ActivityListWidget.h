@@ -1,8 +1,10 @@
 #ifndef ACTIVITY_LIST_WIDGET_H
 #define ACTIVITY_LIST_WIDGET_H
 
+#include <memory>
+
 #include <QWidget>
-#include <QTableWidget>
+#include <QTreeWidget>
 #include <QPushButton>
 
 #include "ActivityList.h"
@@ -11,7 +13,7 @@ class ActivityListWidget : public QWidget{
 	Q_OBJECT
 
 public:
-	ActivityListWidget(ActivityList al, QWidget *parent = 0);		
+	ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent = 0);		
 	~ActivityListWidget() {}
 	
 	bool insertCommitment();
@@ -20,13 +22,13 @@ public:
 private:
 
 	void setupUI();
-	void fillTable();
+	void fillTree();
 
-
-	ActivityList activities;
-	QTableWidget table;
+	
+	std::shared_ptr<ActivityList> activities;
+	QTreeWidget treeView;
 	QPushButton addButton;
 	QPushButton removeButton;
 
-}
+};
 #endif

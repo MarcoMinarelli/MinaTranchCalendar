@@ -167,6 +167,10 @@ Date Date::today(){
 	return Date(now_tm.tm_mday ,now_tm.tm_mon + 1, now_tm.tm_year + 1900);
 }
 
+std::string Date::toString(){
+	return std::string(day) + " " + month + " " + year;
+}
+
 bool Date::operator < (const Date& right) const{
 	if ( this->year > right.year)
 	    return false;

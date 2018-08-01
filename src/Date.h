@@ -22,6 +22,7 @@ class Date {
 		void setMonth(int month) throw (std::runtime_error);
 		void setYear(int year) throw (std::runtime_error);
 		static Date today();
+		std::string toString();
 		bool operator < (const Date& right) const;
 		bool operator == (const Date& right) const;
 		

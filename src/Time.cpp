@@ -36,6 +36,10 @@ bool Time::operator == (const Time& right) const{
 
 }
 
+std::string Time::toString(){
+	return std::string(hours) + " " + minutes + " " + seconds;
+}
+
 Time::~Time() { }
 
 /**
