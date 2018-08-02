@@ -3,7 +3,6 @@
  *
  *  Created on: 06 giu 2018
  *      Author: Minarelli
- *      Co-author:Tranchino
  */
 
 #include "Time.h"
@@ -15,25 +14,16 @@
 	@param m: the minute of the hour [1, 60]
 	@þaram s: the seconds in the minutes [1, 60]
 */
-Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) throw(std::runtime_error){
-	if(h < 0 || h > 24){
-		throw std::runtime_error("Error in number of hours");
+Time::Time(int h, int m, int s) {
+	if(h >= 0 && h < 24){
+		hours = h;
 	}
-	if( m < 0 || m > 60){
-		throw std::runtime_error("Error in number of minutes");
+	if(m >= 0 && m < 60){
+		minutes = m;
 	}
-	if( s < 0 || s > 6){
-		throw std::runtime_error("Error in number of seconds");
+	if(s >= 0 && s < 60){
+		seconds = s;
 	}
-	hours = h;
-	minutes = m;
-	seconds = s;
-}
-
-
-bool Time::operator == (const Time& right) const{
-	return this->hours == right.hours && this->minutes == right.minutes && this->seconds == right.seconds;
-
 }
 
 std::string Time::toString(){
@@ -56,3 +46,4 @@ int Time::getMinutes() const {
 int Time::getSeconds() const {
 	return seconds;
 }
+Time::~Time() {}
