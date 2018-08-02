@@ -5,16 +5,17 @@
 #include "ActivityListWidget.h"
 
 
-ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent) : activities(al){
+ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent) : activities(al), QWidget(parent){
+	treeView = new QTreeWidget;
 	fillTree();
-	QPushButton addButton("Add a task");
-	QPushButton removeButton("Remove a task");
+	addButton = new QPushButton("Add a task");
+	removeButton = new QPushButton("Remove a task");
 	setupUI();
 }
 
 void ActivityListWidget::fillTree(){
-	treeView.setItemsExpandable(false) ;
-	treeView.setHeaderLabels(QStringList() << "Note " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url"); 
+	treeView->setItemsExpandable(false) ;
+	treeView->setHeaderLabels(QStringList() << "Note " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url"); 
 	for(auto it : activities->getCommitments() ){
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 
@@ -25,7 +26,7 @@ void ActivityListWidget::fillTree(){
 		treeItem->setText(4,  QString::fromStdString (it.second.getEndTime().toString() ) );
 		treeItem->setText(5,  QString::fromStdString (it.second.getUrl()) );
 		
-		treeView.addChild(treeItem);
+		treeView->addTopLevelItem(treeItem);
 		delete treeItem;
 	}
 }
@@ -33,13 +34,13 @@ void ActivityListWidget::fillTree(){
 
 
 void ActivityListWidget::setupUI(){
-	QGridLayout mainLayout;
-	QGridLayout underLayout;
-	mainLayout.addWidget(treeView, 1, 1);
-	underLayout.addWidget(addButton, 1, 0);
-	underLayout.addWidget(removeButton, 2, 0);
-	mainLayout.addLayout(&underLayout, 2, 1);
-	setLayout(mainLayout);
+	QGridLayout *mainLayout = new QGridLayout;
+	QGridLayout *underLayout = new QGridLayout;
+	mainLayout->addWidget(treeView, 1, 1);
+	underLayout->addWidget(addButton, 1, 0);
+	underLayout->addWidget(removeButton, 2, 0);
+	mainLayout->addLayout(underLayout, 2, 1);
+	this->setLayout(mainLayout);
 }
 
 
@@ -49,7 +50,7 @@ bool ActivityListWidget::insertCommitment(){
 }
 
 bool ActivityListWidget::removeCommitments(){
-	QList <QTreeWidgetItem *> items = treeView.currentItems();
+	QList <QTreeWidgetItem *> items = treeView->selectedItems();
 
  	//TODO get the row to delete, create the Commitment object and delete it from the ActivityList via removeCommitment(...)
  }

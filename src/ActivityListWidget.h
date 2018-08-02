@@ -14,7 +14,7 @@ class ActivityListWidget : public QWidget{
 
 public:
 	ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent = 0);		
-	~ActivityListWidget() {}
+	~ActivityListWidget() { delete ui; }
 	
 	bool insertCommitment();
 	bool removeCommitments();
@@ -26,9 +26,10 @@ private:
 
 	
 	std::shared_ptr<ActivityList> activities;
-	QTreeWidget treeView;
-	QPushButton addButton;
-	QPushButton removeButton;
+	QTreeWidget* treeView;
+	QPushButton* addButton;
+	QPushButton* removeButton;
+	ActivityListWidget *ui;
 
 };
 #endif

@@ -1,10 +1,11 @@
 #include<QStringList>
+#include<QGridLayout>
 
 #include "MainWindow.h"
 
-MainWindow::MainWindow(User u, QWidget *parent) : user(u), QMainWindow(parent){
+MainWindow::MainWindow(std::shared_ptr<User> u) : user(u){
 	setWindowTitle("Minarelli Tranchino Calendar");
-	ActivityListWidget alw(user.getActivityLists()[0]);
+	alw = new ActivityListWidget(user->getActivityLists()[0]);
    	setupUI();
 }
 
@@ -14,25 +15,25 @@ MainWindow::~MainWindow(){
 
 void MainWindow::setupUI(){
 	this->resize( 500, 200 );
-    QGridLayout leftLayout;
-    QGridLayout mainLayout;
+    QVBoxLayout* leftLayout = new QVBoxLayout;
+    QHBoxLayout* mainLayout = new QHBoxLayout;
+    listWidget = new QListWidget;
+    createList();
 	// First Column
 	addButton = new QPushButton("Add Activity List");
 	removeButton = new QPushButton("Remove Activity List");
-    listModel->setStringList(createList());
-    leftLayout.addWidget(listModel, 1, 1);
-    leftLayout.addWidget(addButton, 2, 1)
-    leftLayout.addWidget(removeButton, 2, 2); 
-    mainLayout.addLayout(leftLayout, 1, 1);
+    leftLayout->addWidget(listWidget);
+    leftLayout->addWidget(addButton);
+    leftLayout->addWidget(removeButton); 
+    mainLayout->addLayout(leftLayout);
     
-    mainLayout.addWidget(alw, 1, 2);
+	setCentralWidget(alw);
    	
-   	setLayout(mainLayout);
+   	this->setLayout(mainLayout);
 }
 
 void MainWindow::createList(){
-	QStringList list;
-	for(auto it : user.getActivityLists()){
-		list << it->getName();
+	for(auto it : user->getActivityLists()){
+		listWidget->addItem( QString::fromStdString(it->getName()) );
 	}
 }
