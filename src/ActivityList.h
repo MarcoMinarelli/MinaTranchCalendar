@@ -10,11 +10,16 @@
 
 #include<iostream>
 #include<map>
+#include<list>
+#include<memory>
+
 
 #include "Commitment.h"
 #include "Date.h"
+#include "Observer.h"
+#include "Subject.h"
 
-class ActivityList {
+class ActivityList : public Subject {
 public:
 	ActivityList(std::string n, std::string desc);
 	virtual ~ActivityList();
@@ -25,9 +30,13 @@ public:
 	const std::string& getDescription() const;
 	const std::string& getName() const;
 	bool operator == (const ActivityList& right) const;
-
+	
+	virtual void attach(Observer * o) override;
+	virtual void detach(Observer * o) override;
+	virtual void notify() const  override;
 
 private:
+	std::list < /*std::shared_ptr <Observer>*/ Observer* > observers;
 	std::string name;
 	std::string description;
 	std::multimap<Date, Commitment> commitments;

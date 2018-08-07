@@ -26,6 +26,7 @@ ActivityList::~ActivityList() {}
 */
 void ActivityList::addCommitment(Commitment toAdd){
 	commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
+	this->notify();
 }
 
 /**
@@ -38,6 +39,21 @@ void ActivityList::removeCommitment(Commitment toDelete){
 			commitments.erase(it);
 			break;
 		}
+	}
+	this->notify();
+}
+
+void ActivityList::attach(Observer * o){
+	observers.push_back( o );
+}
+
+void ActivityList::detach(Observer * o){
+	observers.remove( o );
+}
+
+void ActivityList::notify() const{
+	for(auto obs : observers){
+		obs->update();
 	}
 }
 

@@ -3,9 +3,13 @@
 
 #include "MainWindow.h"
 
-MainWindow::MainWindow(std::shared_ptr<User> u) : user(u){
+MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc) : user(u), userController(uc){
 	setWindowTitle("Minarelli Tranchino Calendar");
-	alw = new ActivityListWidget(user->getActivityLists()[0]);
+	alw = new ActivityListWidget(user->getActivityLists()[1]);
+	listWidget = new QListWidget;
+	commitLabel = new QLabel("Here the events datas will be shown");
+	addButton = new QPushButton("Add Activity List");
+	removeButton = new QPushButton("Remove Activity List");
    	setupUI();
 }
 
@@ -14,22 +18,23 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::setupUI(){
-	this->resize( 500, 200 );
+	this->resize( 1000, 500 );
+	QWidget *mainWid = new QWidget;
     QVBoxLayout* leftLayout = new QVBoxLayout;
     QHBoxLayout* mainLayout = new QHBoxLayout;
-    listWidget = new QListWidget;
     createList();
 	// First Column
-	addButton = new QPushButton("Add Activity List");
-	removeButton = new QPushButton("Remove Activity List");
-    leftLayout->addWidget(listWidget);
+	leftLayout->addWidget(listWidget);
     leftLayout->addWidget(addButton);
     leftLayout->addWidget(removeButton); 
     mainLayout->addLayout(leftLayout);
     
-	setCentralWidget(alw);
+	mainLayout->addWidget(alw);
+	
+   	mainLayout->addWidget(commitLabel);
    	
-   	this->setLayout(mainLayout);
+   	this->setCentralWidget(mainWid);
+   	mainWid->setLayout(mainLayout);
 }
 
 void MainWindow::createList(){
