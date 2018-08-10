@@ -6,8 +6,7 @@
  *      Coauthor:Tranchino
  */
  
-#include "Observer.H"
-#include <list>
+#include "Observer.h"
 #ifndef SRC_SUBJECT_H_
 #define SRC_SUBJECT_H_
 
@@ -19,8 +18,8 @@ public:
 	virtual void detach(Observer * o) = 0;
 	virtual void notify() const  = 0;
 	
-protected:
+//protected:
 	virtual ~Subject() { };
 
-}
+};
 #endif /* SRC_SUBJECT_H_ */

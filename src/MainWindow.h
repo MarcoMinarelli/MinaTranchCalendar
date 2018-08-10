@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
@@ -17,23 +18,29 @@ class MainWindow : public QMainWindow, Observer{
     Q_OBJECT
 
 public:
-    MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc);
+    explicit MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc);
 	~MainWindow();
 	
-	virtual void update() { };//TODO give correct implementation
+	virtual void update() override;
+	
 private slots:
-
-
+	void handleAddButton();
+	void handleRemoveButton();
+	void handleChangeSelectedItem();
+	
 private:
 	void setupUI();
 	void createList();
+	void setupListeners();
 	
 	ActivityListWidget *alw;
 	QListWidget *listWidget;
 	QPushButton *addButton;
 	QPushButton *removeButton;
+	QPushButton *showButton;
 	QLabel *commitLabel;
 	MainWindow *ui;
+	QWidget *mainWid;
 	
 	
 	std::shared_ptr<User> user;

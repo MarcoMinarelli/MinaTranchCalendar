@@ -18,7 +18,11 @@ ActivityList::ActivityList(std::string n, std::string desc):
 	std::multimap<Date, Commitment> commitments;
 }
 
-ActivityList::~ActivityList() {}
+ActivityList::~ActivityList() {
+	for(auto obs : observers){
+		delete obs;
+	}
+}
 
 /**
 	Method that allows to add a commitment to the list

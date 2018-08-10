@@ -6,22 +6,34 @@
 #include <QWidget>
 #include <QTreeWidget>
 #include <QPushButton>
+#include <QSize>
 
 #include "ActivityList.h"
 
-class ActivityListWidget : public QWidget{
+class ActivityListWidget : public QWidget, Observer{
 	Q_OBJECT
 
 public:
 	ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent = 0);		
-	~ActivityListWidget() { delete ui; }
+	~ActivityListWidget();
 	
+	void setActivityList(std::shared_ptr<ActivityList> al); 	
 	bool insertCommitment();
 	bool removeCommitments();
+	
+	QSize sizeHint() const;
+	
+	virtual void update() override;
+	
+private slots:
+	void handleAddButton();
+	void handleRemoveButton();
+	void handleChangeSelectedItem();
 	
 private:
 
 	void setupUI();
+	void setupListeners();
 	void fillTree();
 
 	
@@ -29,6 +41,7 @@ private:
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;
+	QPushButton* showButton;
 	ActivityListWidget *ui;
 
 };

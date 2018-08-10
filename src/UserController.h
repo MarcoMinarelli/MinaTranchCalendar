@@ -18,7 +18,7 @@ public:
 	~UserController() { }
 
 	void addList(std::shared_ptr<ActivityList> al);
-	void removeList(std::shared_ptr<ActivityList> al);
+	void removeList(std::string al);
 
 private:
 	std::shared_ptr<User> user;

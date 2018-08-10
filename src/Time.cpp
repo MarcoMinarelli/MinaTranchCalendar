@@ -29,8 +29,15 @@ Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) thr
 	this->seconds = s;
 }
 
+
+Time Time::fromString(std::string str){
+	std::tm *t;
+	strptime(str.c_str(), "%H:%M:%S", t);
+	return Time(t.tm_hour, t.tm_min, t.tm_sec);
+}
+
 std::string Time::toString() const{
-	return std::to_string(hours) + " " + std::to_string(minutes) + " " + std::to_string(seconds);
+	return std::to_string(hours) + ":" + std::to_string(minutes) + ":" + std::to_string(seconds);
 }
 
 bool Time::operator == (const Time& right) const{

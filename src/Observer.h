@@ -16,8 +16,8 @@ class Observer{
 public:
 	virtual void update() = 0;
 	
-protected:
+//protected:
 	virtual ~Observer() { };
 
-}
+};
 #endif /* SRC_OBSERVER_H_ */

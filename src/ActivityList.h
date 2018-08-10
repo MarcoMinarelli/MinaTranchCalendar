@@ -36,7 +36,7 @@ public:
 	virtual void notify() const  override;
 
 private:
-	std::list < /*std::shared_ptr <Observer>*/ Observer* > observers;
+	std::list < Observer* > observers;
 	std::string name;
 	std::string description;
 	std::multimap<Date, Commitment> commitments;

@@ -49,8 +49,7 @@ bool Commitment::operator == (const Commitment& right) const{
 		 this->startTime == right.startTime &&
 		 this->endTime == right.endTime &&
 		 this->notes == right.notes &&
-		 this->url == right.url &&
-		 this->involvedUsers == right.involvedUsers;
+		 this->url == right.url;
 }
 //FIXME fix the destructor
 //Commitment::~Commitment() { }

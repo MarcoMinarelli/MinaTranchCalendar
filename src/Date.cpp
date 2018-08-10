@@ -167,8 +167,17 @@ Date Date::today(){
 	return Date(now_tm.tm_mday ,now_tm.tm_mon + 1, now_tm.tm_year + 1900);
 }
 
-std::string Date::toString(){
-	return std::string(day) + " " + month + " " + year;
+
+
+Date Date::fromString(std::string str){
+	std::tm *t;
+	strptime(str.c_str(), "%d:%m:%y", t);
+	return Date(t.tm_mday, t.tm_mon, t.tm_year+1900);
+}
+
+
+std::string Date::toString() const{
+	return std::to_string(day) + ":" + std::to_string(month) + ":" + std::to_string(year);
 }
 
 bool Date::operator < (const Date& right) const{

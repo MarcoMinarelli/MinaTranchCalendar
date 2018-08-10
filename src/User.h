@@ -1,10 +1,3 @@
-/*
- * User.h
- *
- *  Created on: 08 giu 2018
- *      Author: marco
- */
-
 #ifndef SRC_USER_H_
 #define SRC_USER_H_
 
@@ -29,7 +22,7 @@ public:
 	virtual void notify() const override;
 	
 private:
-	std::list < /*std::shared_ptr < Observer > */ Observer* > observers;
+	std::list < Observer* > observers;
 	std::vector< std::shared_ptr<ActivityList> > categories;
 	std::ofstream outfile;
 };

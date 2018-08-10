@@ -20,7 +20,8 @@ public:
 	int getHours() const;
 	int getMinutes() const;
 	int getSeconds() const;
-	std::string toString();
+	static Time fromString(std::string str);
+	std::string toString() const;
 	bool operator == (const Time& right) const;
 
 
