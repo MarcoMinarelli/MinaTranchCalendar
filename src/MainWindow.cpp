@@ -15,9 +15,9 @@
 */
 MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc) : user(u), userController(uc){
 	setWindowTitle("Minarelli Tranchino Calendar");
-	alw = new ActivityListWidget(user->getActivityLists()[1]);
+	std::shared_ptr<ActivityListController> alc(new ActivityListController(user->getActivityLists()[1]));
+	alw = new ActivityListWidget(user->getActivityLists()[1], alc);
 	listWidget = new QListWidget;
-	commitLabel = new QLabel("Here the events datas will be shown");
 	addButton = new QPushButton("Add Activity List");
 	removeButton = new QPushButton("Remove Activity List");
 	showButton = new QPushButton("Show Activity List");
@@ -32,7 +32,6 @@ MainWindow::~MainWindow(){
 	delete listWidget;
 	delete addButton;
 	delete removeButton;
-	delete commitLabel;
 	user->detach(this);
 }
 
@@ -102,7 +101,7 @@ void MainWindow::setupUI(){
     
 	mainLayout->addWidget(alw);
 	
-   	mainLayout->addWidget(commitLabel);
+   	//mainLayout->addWidget(commitLabel);
    	
    	this->setCentralWidget(mainWid);
    	mainWid->setLayout(mainLayout);
