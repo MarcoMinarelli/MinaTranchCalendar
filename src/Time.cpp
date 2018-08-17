@@ -6,7 +6,7 @@
  */
 
 #include "Time.h"
-
+#include <ctime>
 
 /**
 	Costructor
@@ -31,8 +31,8 @@ Time::Time(short unsigned int h, short unsigned int m, short unsigned int s) thr
 
 
 Time Time::fromString(std::string str){
-	std::tm *t;
-	strptime(str.c_str(), "%H:%M:%S", t);
+	std::tm t;
+	strptime(str.c_str(), "%H:%M:%S", &t);
 	return Time(t.tm_hour, t.tm_min, t.tm_sec);
 }
 

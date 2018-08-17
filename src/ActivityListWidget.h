@@ -9,12 +9,14 @@
 #include <QSize>
 
 #include "ActivityList.h"
+#include "ActivityListController.h"
+
 
 class ActivityListWidget : public QWidget, Observer{
 	Q_OBJECT
 
 public:
-	ActivityListWidget(std::shared_ptr<ActivityList> al, QWidget *parent = 0);		
+	ActivityListWidget(std::shared_ptr<ActivityList> al, std::shared_ptr<ActivityListController> alc , QWidget *parent = 0);		
 	~ActivityListWidget();
 	
 	void setActivityList(std::shared_ptr<ActivityList> al); 	
@@ -38,11 +40,11 @@ private:
 
 	
 	std::shared_ptr<ActivityList> activities;
+	std::shared_ptr<ActivityListController> activityController;
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;
 	QPushButton* showButton;
-	ActivityListWidget *ui;
 
 };
 #endif

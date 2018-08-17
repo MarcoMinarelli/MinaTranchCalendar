@@ -14,6 +14,7 @@ public:
 	
 	void add(Commitment c);
 	void remove(Commitment c);
+	void setActivityList(std::shared_ptr<ActivityList> a);
 
 private:
 	std::shared_ptr<ActivityList> activityList;

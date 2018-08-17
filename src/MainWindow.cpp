@@ -5,6 +5,8 @@
 #include<QLineEdit>
 #include<QDir>
 #include<QInputDialog>
+#include<QMessageBox>
+
 
 #include "MainWindow.h"
 
@@ -15,8 +17,8 @@
 */
 MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc) : user(u), userController(uc){
 	setWindowTitle("Minarelli Tranchino Calendar");
-	std::shared_ptr<ActivityListController> alc(new ActivityListController(user->getActivityLists()[1]));
-	alw = new ActivityListWidget(user->getActivityLists()[1], alc);
+	std::shared_ptr<ActivityListController> alc(new ActivityListController(user->getActivityLists().at(0)));
+	alw = new ActivityListWidget(user->getActivityLists().at(0), alc);
 	listWidget = new QListWidget;
 	addButton = new QPushButton("Add Activity List");
 	removeButton = new QPushButton("Remove Activity List");
@@ -31,6 +33,7 @@ MainWindow::~MainWindow(){
 	delete alw;
 	delete listWidget;
 	delete addButton;
+	delete showButton;
 	delete removeButton;
 	user->detach(this);
 }
@@ -67,7 +70,11 @@ void MainWindow::handleAddButton(){
 void MainWindow::handleRemoveButton(){
 	QList<QListWidgetItem *> selected = listWidget->selectedItems();
 	for(auto it : selected){
-		userController->removeList(it->text().toUtf8().constData());
+		if(it->text().toUtf8().constData() == "Important Tasks"){
+			userController->removeList(it->text().toUtf8().constData());
+		}else{
+			QMessageBox::about(this, "Impossible delete Activity List", "Impossible delete this Activity List");
+		}
 	}
 	
 }

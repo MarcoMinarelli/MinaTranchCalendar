@@ -7,3 +7,7 @@ void ActivityListController::add(Commitment c){
 void ActivityListController::remove(Commitment c){
 	activityList->removeCommitment(c);
 }
+
+void ActivityListController::setActivityList(std::shared_ptr<ActivityList> a){
+	this->activityList = a;
+}

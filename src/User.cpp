@@ -2,29 +2,23 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
-
+#include <iterator>
 
 #include "User.h"
 
 
-User::User() : categories(), observers(){
+User::User(){
 	std::ifstream infile;
-	infile.open("../user.dat", std::ios::binary);
-	if(!infile){ //if the file is not present, it is created
-		outfile.open("../user.dat", std::ios::binary);
-		addActivityList(std::shared_ptr<ActivityList> ( new ActivityList("Eventi importanti", "Gli event importanti") ) );
-		outfile.close();
+	infile.open("user.dat", std::ios::in | std::ios::binary);
+	if(!infile.is_open()){ //if the file is not present, it is created
+		addActivityList(std::shared_ptr<ActivityList> ( new ActivityList("Important Tasks", "Important Tasks") ) );
 	}else{
-		int size;
-		infile.seekg(0, infile.end);     
-		    
-		size = infile.tellg();              
-		infile.seekg(0, infile.beg);
-		
-		categories.resize(size / sizeof(int) );
-		
-		infile.read((char *) categories.data(), size);
-		
+		ActivityList appo("", "");
+		infile.read( reinterpret_cast<char *>( &appo), sizeof(appo));
+		while( !infile.eof() ){
+			categories.push_back( std::make_shared<ActivityList> (appo) ); //add to the vector
+			infile.read( reinterpret_cast<char *> (&appo), sizeof(appo));  //read single activityList 
+		}
 	}
 	infile.close();
 }
@@ -40,9 +34,19 @@ void User::addActivityList(std::shared_ptr<ActivityList> al){
 	if(std::find(categories.begin(), categories.end(), al) == categories.end() ){
 		categories.push_back(al);
 	}
-	outfile.open("../user.dat", std::ios::binary | std::ios::out);
-	outfile.write((char*) &categories, categories.size() * sizeof(ActivityList));
-	this->notify();
+	outfile.open("user.dat", std::ios::binary | std::ios::out);
+	if(outfile.is_open()){
+		//write the lists
+		ActivityList appo("", "");
+		for(auto it : categories){
+			appo = *it; 
+			outfile.write( reinterpret_cast<char*>( &appo), sizeof(ActivityList) );
+		}
+		outfile.close();
+		this->notify();
+	}else{
+		std::cerr<<"Unable to write on file" << std::endl;
+	}
 }
 
 void User::removeActivityList(std::string aName){
@@ -61,13 +65,11 @@ std::vector< std::shared_ptr<ActivityList> > User::getActivityLists(){
 	return categories;
 }
 
-void User::attach(Observer * o){ 
-	//shared_ptr<Observer> my_ptr(o);
+void User::attach(Observer * o){
 	observers.push_back( o );
 }
 
 void User::detach(Observer * o){
-	//shared_ptr<Observer> my_ptr(o);
 	observers.remove( o );
 }
 

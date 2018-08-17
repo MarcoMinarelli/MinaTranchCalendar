@@ -1,10 +1,3 @@
-/*
- * ActivityList.cpp
- *
- *  Created on: 08 giu 2018
- *      Author: Minarelli
- */
-
 #include "ActivityList.h"
 
 /**
@@ -38,9 +31,11 @@ void ActivityList::addCommitment(Commitment toAdd){
 	@param toAdd: the commitment that will be removed
 */
 void ActivityList::removeCommitment(Commitment toDelete){
-	for(auto it = commitments.equal_range(toDelete.getStartDate()).first; it != commitments.equal_range(toDelete.getStartDate()).second; it++){
+	bool found = false;
+	for(auto it = commitments.equal_range(toDelete.getStartDate()).first; it != commitments.equal_range(toDelete.getStartDate()).second && !found; it++){
 		if(it->second == toDelete){
 			commitments.erase(it);
+			found = true;
 			break;
 		}
 	}

@@ -170,9 +170,9 @@ Date Date::today(){
 
 
 Date Date::fromString(std::string str){
-	std::tm *t;
-	strptime(str.c_str(), "%d:%m:%y", t);
-	return Date(t.tm_mday, t.tm_mon, t.tm_year+1900);
+	std::tm t;
+	strptime(str.c_str(), "%d:%m:%Y", &t);
+	return Date(t.tm_mday, t.tm_mon+1, t.tm_year+1900);
 }
 
 
