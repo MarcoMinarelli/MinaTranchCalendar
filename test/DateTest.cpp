@@ -18,6 +18,16 @@ TEST(Date, minorityOperator) {
     ASSERT_FALSE(d1< d3);
 }
 
+
+TEST(Date, fromString) {
+    std::string s = "12:12:2012";
+    Date d = Date::fromString(s);
+    ASSERT_EQ(12, d.getDay());
+    ASSERT_EQ(12, d.getMonth());
+    ASSERT_EQ(2012, d.getYear());
+}
+
+
 TEST(Date, ExceptionThrows){
 	try{
 		Date d(123, 02, 2018);

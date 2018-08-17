@@ -43,7 +43,7 @@ TEST_F(ActivityListSuite, GetCommitments) {
     ASSERT_EQ(1, al->getCommitments().size());
     
     
-    Commitment c(Date(14, 10, 18), Date(14, 10, 18), Time(static_cast<unsigned>(14), static_cast<unsigned>(00), static_cast<unsigned>(00)), Time(static_cast<unsigned>(15),static_cast<unsigned>(00), static_cast<unsigned>(00)), false, std::string("This is a note, again"), std::string("www.boh.com"));
+    Commitment c(Date(14, 10, 18), Date(14, 10, 18), Time(static_cast<unsigned>(14), static_cast<unsigned>(00), static_cast<unsigned>(00)), Time(static_cast<unsigned>(15),static_cast<unsigned>(00), static_cast<unsigned>(00)), true, std::string("This is a note, again"), std::string("www.boh.com"));
         al->addCommitment(c);
     
     ASSERT_EQ(2, al->getCommitments().size());
@@ -52,9 +52,15 @@ TEST_F(ActivityListSuite, GetCommitments) {
 }
 
 TEST_F(ActivityListSuite, RemoveCommitment){
-	Commitment c(Date(14, 10, 18), Date(14, 10, 18), Time(static_cast<unsigned>(14), static_cast<unsigned>(00), static_cast<unsigned>(00)), Time(static_cast<unsigned>(15),static_cast<unsigned>(00), static_cast<unsigned>(00)), false, std::string("This is a note, again"), std::string("www.boh.com"));
+	Commitment c(Date(14, 10, 18), Date(14, 10, 18), Time(static_cast<unsigned>(14), static_cast<unsigned>(00), static_cast<unsigned>(00)), Time(static_cast<unsigned>(15),static_cast<unsigned>(00), static_cast<unsigned>(00)), true, std::string("This is a note, again"), std::string("www.boh.com"));
 	 al->removeCommitment(c);
+    ASSERT_EQ(1, al->getCommitments().size());
     
+    
+    //Here we test the remove if the repeated flag is different
+    al->addCommitment(c);
+    Commitment c2(Date(14, 10, 18), Date(14, 10, 18), Time(static_cast<unsigned>(14), static_cast<unsigned>(00), static_cast<unsigned>(00)), Time(static_cast<unsigned>(15),static_cast<unsigned>(00), static_cast<unsigned>(00)), false, std::string("This is a note, again"), std::string("www.boh.com"));
+    al->removeCommitment(c2);
     ASSERT_EQ(1, al->getCommitments().size());
     //Here, we test that the remaining commitment has the proper values
     Commitment c1 = al->getCommitments().find(Date(12, 01, 18))->second;

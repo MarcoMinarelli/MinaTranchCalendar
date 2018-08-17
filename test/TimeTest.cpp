@@ -18,3 +18,11 @@ TEST(Time, ExceptionThrows){
 		EXPECT_EQ(err.what(),std::string("Error in number of hours"));
 	}
 }
+
+TEST(Time, fromString){
+	std::string s = "10:03:05";
+	Time t = Time::fromString(s);
+	ASSERT_EQ(10, t.getHours());
+   	ASSERT_EQ(03, t.getMinutes());
+   	ASSERT_EQ(05, t.getSeconds());
+}
