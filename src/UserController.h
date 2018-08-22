@@ -19,6 +19,7 @@ public:
 
 	void addList(std::shared_ptr<ActivityList> al);
 	void removeList(std::string al);
+	void onClose();
 
 private:
 	std::shared_ptr<User> user;

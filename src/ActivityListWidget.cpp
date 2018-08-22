@@ -1,11 +1,10 @@
-#include<QGridLayout>
 #include<QStringList>
 #include<QTreeWidgetItem>
 #include<QMessageBox>
 #include <iostream>
 
 #include "ActivityListWidget.h"
-
+#include "CommitmentDialog.h"
 
 /**
 	Constructor of the class
@@ -91,6 +90,8 @@ ActivityListWidget::~ActivityListWidget(){
 	delete removeButton;
 	delete addButton;
 	delete showButton;
+	delete mainLayout;
+	delete underLayout;
 }
 
 QSize ActivityListWidget::sizeHint() const{
@@ -101,8 +102,10 @@ QSize ActivityListWidget::sizeHint() const{
 	The following methods allow to handle the action displayed by the buttons
 */
 void ActivityListWidget::handleAddButton(){
-	//TODO get new Commitment data, then create the Commitment object, add it to ActivityList via addCommitment(...) method and then  
-	// call again fillTable()
+	CommitmentDialog dialog(this);
+	if(dialog.exec() == QDialog::Accepted){
+		activityController->add( dialog.getInsertedCommitment() );
+	}
 }
 
 

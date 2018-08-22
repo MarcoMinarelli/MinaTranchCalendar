@@ -40,6 +40,21 @@ std::string Time::toString() const{
 	return std::to_string(hours) + ":" + std::to_string(minutes) + ":" + std::to_string(seconds);
 }
 
+bool Time::operator < (const Time& right) const{
+	if ( this->hours > right.hours)
+	    return false;
+	else if (this->hours == right.hours) {
+	    if (this->minutes > right.minutes)
+	        return false;
+	    else if (this->minutes == right.minutes) {
+	        if (this->seconds >= right.seconds)
+	            return false;
+	    }
+	}
+	return true;
+}
+
+
 bool Time::operator == (const Time& right) const{
 	return this->hours == right.hours && this->minutes == right.minutes && this->seconds == right.seconds;
 

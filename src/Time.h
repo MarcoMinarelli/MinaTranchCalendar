@@ -22,6 +22,8 @@ public:
 	int getSeconds() const;
 	static Time fromString(std::string str);
 	std::string toString() const;
+	
+	bool operator < (const Time& right) const;
 	bool operator == (const Time& right) const;
 
 

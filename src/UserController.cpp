@@ -9,3 +9,7 @@ void UserController::addList(std::shared_ptr<ActivityList> al){
 void UserController::removeList(std::string alName){
 	user->removeActivityList(alName);
 }
+
+void UserController::onClose(){
+	user->save();
+}

@@ -1,4 +1,5 @@
-
+#include <iostream>
+#include <fstream>
 #include <memory>
 
 #include <QApplication>
@@ -15,9 +16,8 @@ void createActivityList(std::shared_ptr<User> u);
 
 int main(int argc, char **argv){
 	QApplication app (argc, argv);
-
 	std::shared_ptr<User> ptr(new User);
-	createActivityList(ptr);
+	//createActivityList(ptr);
 	std::shared_ptr<UserController> controllerPtr(new UserController(ptr) );
 	MainWindow newWindow(ptr, controllerPtr);
     newWindow.show();

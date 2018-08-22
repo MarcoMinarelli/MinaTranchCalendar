@@ -12,6 +12,7 @@
 #include <iostream>
 #include <list>
 #include <memory>
+#include <fstream>
 
 #include "Date.h"
 #include "Time.h"
@@ -23,9 +24,10 @@ public:
 
 
 	explicit Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
-			std::string note, std::string u, std::list< std::shared_ptr<User> > users);
+			std::string note, std::string u, std::list< std::shared_ptr<User> > users) throw (std::runtime_error);
 	explicit Commitment(Date start, Date end, Time strartT, Time endT, bool repeat,
-				std::string note, std::string u);
+				std::string note, std::string u) throw (std::runtime_error);
+	~Commitment() { };
 	const Date& getEndDate() const;
 	const Time& getEndTime() const;
 	const std::list< std::shared_ptr<User> >& getInvolvedUsers() const;
@@ -35,7 +37,9 @@ public:
 	const Time& getStartTime() const;
 	const std::string& getUrl() const;
 	bool operator == (const Commitment& right) const;
-
+	void save(std::ofstream& outfile);
+	static Commitment load(std::ifstream& infile);
+	
 private:
 	Date startDate;
 	Date endDate;

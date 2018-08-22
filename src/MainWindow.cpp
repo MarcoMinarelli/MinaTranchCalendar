@@ -91,6 +91,21 @@ void MainWindow::handleChangeSelectedItem(){
 	}
 }
 
+
+void MainWindow::closeEvent (QCloseEvent *event){
+	QMessageBox::StandardButton resBtn = QMessageBox::question( this, tr("Minarelli Tranchino Calendar"),
+                                                                tr("Are you sure?\n"),
+                                                                QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                                                                QMessageBox::Yes);
+    if (resBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+    	userController->onClose();
+        event->accept();
+    }
+
+}
+
 /**
 	Method that allows to set up the graphical components
 */

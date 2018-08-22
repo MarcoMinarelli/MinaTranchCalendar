@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QListWidget>
+#include <QCloseEvent>
 
 #include "User.h"
 #include "UserController.h"
@@ -21,6 +22,7 @@ public:
     explicit MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc);
 	~MainWindow();
 	
+	virtual void closeEvent (QCloseEvent *event) override;
 	virtual void update() override;
 	
 private slots:

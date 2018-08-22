@@ -17,6 +17,9 @@ public:
 	void addActivityList(std::shared_ptr<ActivityList> al);
 	void removeActivityList(std::string name);
 	std::vector< std::shared_ptr<ActivityList> > getActivityLists();
+	void save();
+	
+	
 	virtual void attach(Observer * o) override;
 	virtual void detach(Observer * o) override;
 	virtual void notify() const override;
@@ -25,6 +28,8 @@ private:
 	std::list < Observer* > observers;
 	std::vector< std::shared_ptr<ActivityList> > categories;
 	std::ofstream outfile;
+	
+	void load();
 };
 
 

@@ -7,6 +7,7 @@
 #include <QTreeWidget>
 #include <QPushButton>
 #include <QSize>
+#include <QBoxLayout>
 
 #include "ActivityList.h"
 #include "ActivityListController.h"
@@ -45,6 +46,8 @@ private:
 	QPushButton* addButton;
 	QPushButton* removeButton;
 	QPushButton* showButton;
+	QVBoxLayout *mainLayout;
+	QHBoxLayout *underLayout;
 
 };
 #endif
