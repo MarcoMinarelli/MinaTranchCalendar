@@ -45,19 +45,30 @@ CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn
 
 void CommitmentDialog::verify(){
 	try{
-		Date start(startCal->selectedDate().day(), startCal->selectedDate().month(), startCal->selectedDate().year());
-		Date end(endCal->selectedDate().day(), endCal->selectedDate().month(), endCal->selectedDate().year());
-		Time startT = Time::fromString(startTimeEdit->text().toUtf8().constData());
-		Time endT = Time::fromString(endTimeEdit->text().toUtf8().constData());
-		std::string note = noteEdit->text().toUtf8().constData();
-		std::string url = urlEdit->text().toUtf8().constData();
-		Commitment c(start, end, startT, endT, false, note, url );
-		toReturn = c;
-		accept();
-        return;
+		if(noteEdit->text().isEmpty()){
+			QMessageBox::warning(this, tr("Error"), tr( "The Commitment Note is empty" ));
+		}else if(urlEdit->text().isEmpty()){
+			QMessageBox::warning(this, tr("Error"), tr( "The Commitment URL is empty" ));
+		}else if(startTimeEdit->text().isEmpty()){
+			QMessageBox::warning(this, tr("Error"), tr( "The Start Date is empty" ));
+		}else if(endTimeEdit->text().isEmpty()){
+			QMessageBox::warning(this, tr("Error"), tr( "The End Date is empty" ));
+		}else{
+			Date start(startCal->selectedDate().day(), startCal->selectedDate().month(), startCal->selectedDate().year());
+			Date end(endCal->selectedDate().day(), endCal->selectedDate().month(), endCal->selectedDate().year());
+			Time startT = Time::fromString(startTimeEdit->text().toUtf8().constData());
+			Time endT = Time::fromString(endTimeEdit->text().toUtf8().constData());
+			std::string note = noteEdit->text().toUtf8().constData();
+			std::string url = urlEdit->text().toUtf8().constData();
+			Commitment c(start, end, startT, endT, false, note, url );
+			this->toReturn = c;
+			accept();
+		    return;
+        }
 	}catch(std::runtime_error &e){
-		QErrorMessage error;
-		error.showMessage( QString::fromStdString("Error in some fields"));
+		std::string errorMex = "Error in some fields ";
+		errorMex.append( e.what() );
+		QMessageBox::warning(this, tr("Error"), QString::fromStdString(errorMex) );
 	}
 
 }
