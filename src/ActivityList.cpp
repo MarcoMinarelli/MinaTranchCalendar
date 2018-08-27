@@ -1,4 +1,7 @@
+#include <algorithm>
+
 #include "ActivityList.h"
+
 
 /**
 	Costructor
@@ -22,7 +25,11 @@ ActivityList::~ActivityList() {
 	@param toAdd: the commitment that will be added
 */
 void ActivityList::addCommitment(Commitment toAdd){
-	if(std::find(commitments.begin(), commitments.end(), std::make_pair (toAdd.getStartDate(), toAdd) ) == commitments.end()){
+	
+	if(std::none_of(commitments.begin(), commitments.end(),
+                   [&toAdd](const std::pair<Date, Commitment>& c)
+                   { return c.second == toAdd; }))
+    {
 		commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
 		this->notify();
 	}

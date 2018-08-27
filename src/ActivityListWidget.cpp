@@ -18,6 +18,8 @@ ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, std::sh
 	removeButton = new QPushButton("Remove a task");
 	showButton = new QPushButton("Show selected task");
 	importantButton = new QPushButton("Add to Important Task");
+	titleLabel = new QLabel( QString::fromStdString( activities->getName() ) );
+	titleLabel->setAlignment(Qt::AlignCenter);
 	activities->attach(this);
 	setupUI();
 	setupListeners();
@@ -35,10 +37,10 @@ void ActivityListWidget::setActivityList(std::shared_ptr<ActivityList> al){
 	fillTree();
 	if(activities->getName() != "Important Tasks" ){
 		importantButton->setVisible(true);
-		std::cout << "Added";
 	}else if(activities->getName() == "Important Tasks" && importantButton != nullptr){
 		importantButton->setVisible(false);
 	}
+	titleLabel->setText( QString::fromStdString( activities->getName() ) );
 }
 
 /**
@@ -84,6 +86,7 @@ void ActivityListWidget::update(){
 void ActivityListWidget::setupUI(){
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	QHBoxLayout *underLayout = new QHBoxLayout;
+	mainLayout->addWidget(titleLabel);
 	mainLayout->addWidget(treeView);
 	underLayout->addWidget(addButton);
 	underLayout->addWidget(removeButton);
@@ -114,6 +117,7 @@ QSize ActivityListWidget::sizeHint() const{
 void ActivityListWidget::handleAddButton(){
 	CommitmentDialog dialog(this);
 	if(dialog.exec() == QDialog::Accepted){
+		std::cout << "Called";
 		activityController->add( dialog.getInsertedCommitment() );
 	}
 }

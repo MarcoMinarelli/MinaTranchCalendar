@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QSize>
 #include <QBoxLayout>
+#include <QLabel>
 
 #include "ActivityList.h"
 #include "ActivityListController.h"
@@ -45,6 +46,7 @@ private:
 	std::shared_ptr<ActivityListController> activityController;
 	std::shared_ptr<User> user;
 	
+	QLabel* titleLabel;
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;
