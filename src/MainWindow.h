@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QCloseEvent>
+#include <QBoxLayout>
 
 #include "User.h"
 #include "UserController.h"
@@ -40,9 +41,9 @@ private:
 	QPushButton *addButton;
 	QPushButton *removeButton;
 	QPushButton *showButton;
-	QLabel *commitLabel;
-	MainWindow *ui;
 	QWidget *mainWid;
+	QVBoxLayout* leftLayout;
+	QHBoxLayout* mainLayout;
 	
 	
 	std::shared_ptr<User> user;

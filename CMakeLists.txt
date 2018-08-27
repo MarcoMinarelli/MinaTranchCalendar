@@ -1,3 +1,4 @@
+#Main project
 cmake_minimum_required(VERSION 3.5)
 project( Minarelli_Tranchino_Calendar )
 
@@ -13,7 +14,6 @@ find_package(Qt5Widgets REQUIRED)
 add_subdirectory(test)
 
 
-
 add_executable( Minarelli_Tranchino_Calendar src/main.cpp 
 		#backend files
 		src/Date.h
@@ -27,12 +27,20 @@ add_executable( Minarelli_Tranchino_Calendar src/main.cpp
 		src/Commitment.h
 		src/Commitment.cpp
 		src/Observer.h
-		src/Subject.h
+		src/Subject.h	
 		
 		#GUI files
+		src/UserController.h
+		src/UserController.cpp
+		src/CommitmentDialog.h
+		src/CommitmentDialog.cpp
+		src/ActivityListController.h
+		src/ActivityListController.cpp
+		src/ActivityListWidget.h
+		src/ActivityListWidget.cpp
 		src/MainWindow.h
-		src/MainWindow.cpp )
-
+		src/MainWindow.cpp 
+		)
 		
 # Use the Widgets module from Qt 5.
 target_link_libraries(Minarelli_Tranchino_Calendar Qt5::Widgets)

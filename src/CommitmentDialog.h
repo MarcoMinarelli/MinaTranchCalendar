@@ -7,7 +7,7 @@
 #include <QDialogButtonBox>
 #include <QCalendarWidget>
 #include <QGridLayout>
-#include <QRegExpValidator>
+#include <QRegExpValidator> 
 #include <QLineEdit>
 
 
@@ -48,7 +48,8 @@ private:
 	QLineEdit *endTimeEdit;
 	
 	QGridLayout *mainLayout;
-	QRegExpValidator *val;
+	QRegExpValidator *dateValidator;
+	QRegExpValidator *urlValidator;
 	
 	
 	Commitment toReturn;

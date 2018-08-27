@@ -11,12 +11,13 @@
 	@param al: the ActivityList that the widget displays
 	@param parent: the parent of this widget
 */
-ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, std::shared_ptr<ActivityListController> alc, QWidget *parent) : activities(al), activityController(alc),  QWidget(parent){
+ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, std::shared_ptr<ActivityListController> alc, std::shared_ptr<User> u, QWidget *parent) : activities(al), activityController(alc), user(u), QWidget(parent){
 	treeView = new QTreeWidget;
 	fillTree();
 	addButton = new QPushButton("Add a task");
 	removeButton = new QPushButton("Remove a task");
 	showButton = new QPushButton("Show selected task");
+	importantButton = new QPushButton("Add to Important Task");
 	activities->attach(this);
 	setupUI();
 	setupListeners();
@@ -32,6 +33,12 @@ void ActivityListWidget::setActivityList(std::shared_ptr<ActivityList> al){
 	activityController->setActivityList(al);
 	activities->attach(this);
 	fillTree();
+	if(activities->getName() != "Important Tasks" ){
+		importantButton->setVisible(true);
+		std::cout << "Added";
+	}else if(activities->getName() == "Important Tasks" && importantButton != nullptr){
+		importantButton->setVisible(false);
+	}
 }
 
 /**
@@ -41,6 +48,7 @@ void ActivityListWidget::setupListeners(){
 	connect(addButton, SIGNAL (released()), this, SLOT (handleAddButton()));
 	connect(removeButton, SIGNAL (released()), this, SLOT (handleRemoveButton()));
 	connect(showButton, SIGNAL(released()), this, SLOT(handleChangeSelectedItem()));
+	connect(importantButton, SIGNAL(released()), this, SLOT(handleImportantButton()));
 }
 
 /**
@@ -80,6 +88,8 @@ void ActivityListWidget::setupUI(){
 	underLayout->addWidget(addButton);
 	underLayout->addWidget(removeButton);
 	underLayout->addWidget(showButton);
+	underLayout->addWidget(importantButton);
+	importantButton->setVisible(false);
 	mainLayout->addLayout(underLayout);
 	this->setLayout(mainLayout);
 }
@@ -140,3 +150,17 @@ void ActivityListWidget::handleChangeSelectedItem(){
 	);
 }
 
+
+void ActivityListWidget::handleImportantButton(){
+	QTreeWidgetItem *selected = treeView->selectedItems().at(0);
+	Commitment c(Date::fromString( selected->text(1).toUtf8().constData() ), //start date
+					Date::fromString( selected->text(3).toUtf8().constData() ), //end date
+					Time::fromString( selected->text(2).toUtf8().constData() ), //start time
+					Time::fromString( selected->text(4).toUtf8().constData() ), //end time
+					false, //repeat
+					selected->text(0).toUtf8().constData() , //notes
+					selected->text(5).toUtf8().constData() //url
+					);
+	// adds the Commitment to the user important tasks 
+	user->getActivityLists().at(0)->addCommitment(c);
+}

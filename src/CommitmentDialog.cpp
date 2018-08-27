@@ -31,11 +31,14 @@ CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn
     endCal->setMaximumDate(QDate(3000, 1, 1));
     endCal->setGridVisible(true);
     
-    val = new QRegExpValidator( QRegExp("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"), this );
+    dateValidator = new QRegExpValidator( QRegExp("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"), this );
+    urlValidator = new QRegExpValidator ( QRegExp("^www\\.[\\w]+\\.[a-z]{3}$"), this); 
     
-    startTimeEdit->setValidator(val);
-    endTimeEdit->setValidator(val);
     
+    startTimeEdit->setValidator(dateValidator);
+    endTimeEdit->setValidator(dateValidator);
+    
+    urlEdit->setValidator(urlValidator);
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Help | QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     
 	setupUi();
@@ -93,7 +96,8 @@ CommitmentDialog::~CommitmentDialog(){
 	delete endTimeLabel;
 	delete endTimeEdit;
 	delete buttonBox;
-	delete val;
+	delete dateValidator;
+	delete urlValidator;
 }
 
 void CommitmentDialog::setupUi(){
@@ -123,5 +127,5 @@ void CommitmentDialog::help(){
 	QMessageBox::about (
 		this,
 		QString::fromStdString("Time input"),
-		QString::fromStdString("The Time format used is \n HH:MM:SS") );
+		QString::fromStdString("The Time format used is \n HH:MM:SS \n \n And the URL is in format \n www.someurl.someExt") );
 }

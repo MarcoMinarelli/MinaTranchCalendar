@@ -53,7 +53,8 @@ void User::load(){
 				toAdd->addCommitment( Commitment::load(infile) );
 			} 
 			categories.push_back(toAdd);
-		}	
+		}
+			
 	}
 	infile.close();
 }

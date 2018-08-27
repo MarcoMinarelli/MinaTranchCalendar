@@ -1,7 +1,6 @@
 #include<iostream>
 
 #include<QStringList>
-#include<QGridLayout>
 #include<QLineEdit>
 #include<QDir>
 #include<QInputDialog>
@@ -18,12 +17,14 @@
 MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> uc) : user(u), userController(uc){
 	setWindowTitle("Minarelli Tranchino Calendar");
 	std::shared_ptr<ActivityListController> alc(new ActivityListController(user->getActivityLists().at(0)));
-	alw = new ActivityListWidget(user->getActivityLists().at(0), alc);
+	alw = new ActivityListWidget(user->getActivityLists().at(0), alc, user);
 	listWidget = new QListWidget;
 	addButton = new QPushButton("Add Activity List");
 	removeButton = new QPushButton("Remove Activity List");
 	showButton = new QPushButton("Show Activity List");
 	mainWid = new QWidget;
+	leftLayout = new QVBoxLayout;
+    mainLayout = new QHBoxLayout;
 	user->attach(this);
    	setupUI();
    	setupListeners();
@@ -35,6 +36,9 @@ MainWindow::~MainWindow(){
 	delete addButton;
 	delete showButton;
 	delete removeButton;
+	delete mainWid;
+	delete leftLayout;
+	delete mainLayout;
 	user->detach(this);
 }
 
@@ -70,7 +74,8 @@ void MainWindow::handleAddButton(){
 void MainWindow::handleRemoveButton(){
 	QList<QListWidgetItem *> selected = listWidget->selectedItems();
 	for(auto it : selected){
-		if(it->text().toUtf8().constData() == "Important Tasks"){
+		if(it->text() != QString::fromStdString("Important Tasks")){
+			alw->setActivityList(user->getActivityLists().at(0));
 			userController->removeList(it->text().toUtf8().constData());
 		}else{
 			QMessageBox::about(this, "Impossible delete Activity List", "Impossible delete this Activity List");
@@ -111,10 +116,8 @@ void MainWindow::closeEvent (QCloseEvent *event){
 */
 void MainWindow::setupUI(){
 	this->resize( 1500, 500 );
-    QVBoxLayout* leftLayout = new QVBoxLayout;
-    QHBoxLayout* mainLayout = new QHBoxLayout;
     createList();
-	// First Column
+    
 	leftLayout->addWidget(listWidget);
     leftLayout->addWidget(addButton);
     leftLayout->addWidget(removeButton);
@@ -122,11 +125,10 @@ void MainWindow::setupUI(){
     mainLayout->addLayout(leftLayout);
     
 	mainLayout->addWidget(alw);
-	
-   	//mainLayout->addWidget(commitLabel);
    	
-   	this->setCentralWidget(mainWid);
+   	
    	mainWid->setLayout(mainLayout);
+   	this->setCentralWidget(mainWid);
 }
 
 void MainWindow::update(){

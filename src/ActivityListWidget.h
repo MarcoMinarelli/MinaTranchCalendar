@@ -11,13 +11,13 @@
 
 #include "ActivityList.h"
 #include "ActivityListController.h"
-
+#include "User.h"
 
 class ActivityListWidget : public QWidget, Observer{
 	Q_OBJECT
 
 public:
-	ActivityListWidget(std::shared_ptr<ActivityList> al, std::shared_ptr<ActivityListController> alc , QWidget *parent = 0);		
+	ActivityListWidget(std::shared_ptr<ActivityList> al, std::shared_ptr<ActivityListController> alc , std::shared_ptr<User> u, QWidget *parent = 0);		
 	~ActivityListWidget();
 	
 	void setActivityList(std::shared_ptr<ActivityList> al); 	
@@ -31,6 +31,7 @@ public:
 private slots:
 	void handleAddButton();
 	void handleRemoveButton();
+	void handleImportantButton();
 	void handleChangeSelectedItem();
 	
 private:
@@ -42,12 +43,14 @@ private:
 	
 	std::shared_ptr<ActivityList> activities;
 	std::shared_ptr<ActivityListController> activityController;
+	std::shared_ptr<User> user;
+	
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;
 	QPushButton* showButton;
-	QVBoxLayout *mainLayout;
-	QHBoxLayout *underLayout;
-
+	QPushButton* importantButton;
+	QVBoxLayout* mainLayout;
+	QHBoxLayout* underLayout;
 };
 #endif

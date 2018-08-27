@@ -22,8 +22,10 @@ ActivityList::~ActivityList() {
 	@param toAdd: the commitment that will be added
 */
 void ActivityList::addCommitment(Commitment toAdd){
-	commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
-	this->notify();
+	if(std::find(commitments.begin(), commitments.end(), std::make_pair (toAdd.getStartDate(), toAdd) ) == commitments.end()){
+		commitments.insert(std::make_pair (toAdd.getStartDate(), toAdd) );
+		this->notify();
+	}
 }
 
 /**
