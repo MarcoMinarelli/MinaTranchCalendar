@@ -33,6 +33,7 @@ private:
 
  	QLabel *noteLabel;
     QLabel *urlLabel;
+    QLabel *placeLabel;
     QLabel *startLabel;
     QLabel *endLabel;
     QLabel *startTimeLabel;
@@ -42,6 +43,7 @@ private:
 
 	QLineEdit *noteEdit;
 	QLineEdit *urlEdit;
+	QLineEdit *placeEdit;
 	QCalendarWidget *startCal;
 	QCalendarWidget *endCal;
 	QLineEdit *startTimeEdit;

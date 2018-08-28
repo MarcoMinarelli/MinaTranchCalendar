@@ -31,6 +31,7 @@ MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> 
 }
 
 MainWindow::~MainWindow(){
+	user->detach(this);
 	delete alw;
 	delete listWidget;
 	delete addButton;
@@ -39,8 +40,8 @@ MainWindow::~MainWindow(){
 	delete mainWid;
 	delete leftLayout;
 	delete mainLayout;
-	user->detach(this);
 }
+
 
 /**
 	Method that set up the listeners, in order to use the GUI

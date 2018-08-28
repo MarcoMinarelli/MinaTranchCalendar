@@ -61,7 +61,7 @@ void ActivityListWidget::setupListeners(){
 void ActivityListWidget::fillTree(){
 	treeView->clear();
 	treeView->setItemsExpandable(false) ;
-	treeView->setHeaderLabels(QStringList() << "Notes " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url"); 
+	treeView->setHeaderLabels(QStringList() << "Notes " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url" << "Place"); 
 	for(auto it : activities->getCommitments() ){
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 
@@ -71,6 +71,7 @@ void ActivityListWidget::fillTree(){
 		treeItem->setText(3,  QString::fromStdString (it.second.getEndDate().toString() ) );
 		treeItem->setText(4,  QString::fromStdString (it.second.getEndTime().toString() ) );
 		treeItem->setText(5,  QString::fromStdString (it.second.getUrl()) );
+		treeItem->setText(6,  QString::fromStdString (it.second.getPlace()) );
 		
 		treeView->addTopLevelItem(treeItem);
 	}
@@ -102,10 +103,14 @@ void ActivityListWidget::setupUI(){
 
 
 ActivityListWidget::~ActivityListWidget(){
+	activities->detach(this);
+	delete titleLabel;
+	delete descLabel;
 	delete treeView;
 	delete removeButton;
 	delete addButton;
 	delete showButton;
+	delete importantButton;
 	delete mainLayout;
 	delete underLayout;
 }
@@ -120,7 +125,6 @@ QSize ActivityListWidget::sizeHint() const{
 void ActivityListWidget::handleAddButton(){
 	CommitmentDialog dialog(this);
 	if(dialog.exec() == QDialog::Accepted){
-		std::cout << "Called";
 		activityController->add( dialog.getInsertedCommitment() );
 	}
 }
@@ -138,7 +142,8 @@ void ActivityListWidget::handleRemoveButton(){
 					Time::fromString( it->text(4).toUtf8().constData() ), //end time
 					false, //repeat
 					it->text(0).toUtf8().constData() , //notes
-					it->text(5).toUtf8().constData() //url
+					it->text(5).toUtf8().constData(), //url
+					it->text(6).toUtf8().constData() //place
 					);
 		activityController->remove(c); 
 	}
@@ -146,15 +151,19 @@ void ActivityListWidget::handleRemoveButton(){
 
 void ActivityListWidget::handleChangeSelectedItem(){
 	//get the first selected item
-	QTreeWidgetItem *selected = treeView->selectedItems().at(0);
-	QMessageBox::about( this, "Commitment data", 
-				"Start Date: " + selected->text(1) + " <br>" +
-				"Start Time: " + selected->text(2) + " <br>" +
-				"End Date: " + selected->text(3) + " <br>" +
-				"End Time: " + selected->text(4) + " <br>" +
-				"Notes: " + selected->text(0) + " <br>" +
-				"URL: <a href=" + selected->text(5) + ">" + selected->text(5) + " <br>"
-	);
+	if( treeView->selectedItems().size() > 0){
+		QTreeWidgetItem *selected = treeView->selectedItems().at(0);
+		QMessageBox::about( this, "Commitment data", 
+					"Start Date: " + selected->text(1) + " <br>" +
+					"Start Time: " + selected->text(2) + " <br>" +
+					"End Date: " + selected->text(3) + " <br>" +
+					"End Time: " + selected->text(4) + " <br>" +
+					"Notes: " + selected->text(0) + " <br>" +
+					"URL: <a href=" + selected->text(5) + ">" + selected->text(5) + "</a> <br>" +
+					"Place: " + selected->text(6) + " <br>"
+					 
+		);
+	}
 }
 
 
@@ -166,7 +175,8 @@ void ActivityListWidget::handleImportantButton(){
 					Time::fromString( selected->text(4).toUtf8().constData() ), //end time
 					false, //repeat
 					selected->text(0).toUtf8().constData() , //notes
-					selected->text(5).toUtf8().constData() //url
+					selected->text(5).toUtf8().constData(), //url
+					selected->text(6).toUtf8().constData() //place
 					);
 	// adds the Commitment to the user important tasks 
 	user->getActivityLists().at(0)->addCommitment(c);

@@ -20,7 +20,7 @@
 	@param users: list of the users that will be involved in th commitment
 */
 Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
-			std::string note, std::string u, std::list< std::shared_ptr<User> > users)throw (std::runtime_error) : startDate(start), endDate(end), startTime(startT), endTime(endT), repeated(repeat), notes(note), url(u), involvedUsers(users){
+			std::string note, std::string u, std::string places, std::list< std::shared_ptr<User> > users)throw (std::runtime_error) : startDate(start), endDate(end), startTime(startT), endTime(endT), repeated(repeat), notes(note), url(u), place(places), involvedUsers(users){
 				if(end < start){
 					throw std::runtime_error("Error: end date is less than start date");
 				}
@@ -40,7 +40,7 @@ Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat
 	@param u: the url of the commitment
 */
 Commitment::Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
-			std::string note, std::string u) throw (std::runtime_error) : startDate(start), endDate(end), startTime(startT), endTime(endT), repeated(repeat), notes(note), url(u), involvedUsers(){
+			std::string note, std::string u, std::string places) throw (std::runtime_error) : startDate(start), endDate(end), startTime(startT), endTime(endT), repeated(repeat), notes(note), url(u), place(places), involvedUsers(){
 				if(end < start){
 					throw std::runtime_error("Error: end date is less than start date");
 				}
@@ -73,6 +73,9 @@ void Commitment::save(std::ofstream& outfile){
 	size = url.size();
 	outfile.write ( reinterpret_cast<char*> ( &(size) ), sizeof(int)  );
 	outfile.write( url.c_str(), url.size() );
+	size = place.size();
+	outfile.write ( reinterpret_cast<char*> ( &(size) ), sizeof(int)  );
+	outfile.write( place.c_str(), place.size() );
 	outfile.flush();
 }
 
@@ -81,7 +84,7 @@ Commitment Commitment::load(std::ifstream& infile){
 	Date start(1, 1, 2001), end (1 , 1, 2001);
 	Time startT(12, 12, 12), endT(12, 12, 12);
 	bool rep;
-	std::string note, url;
+	std::string note, url, places;
 	int size;
 	
 	
@@ -101,10 +104,15 @@ Commitment Commitment::load(std::ifstream& infile){
 	infile.read( buf, size);
 	buf[size] = '\0';
 	url.assign(buf);
+	infile.read( reinterpret_cast<char *>( &size), sizeof(int)); // read string size
+	buf = new char[size+1];
+	infile.read( buf, size);
+	buf[size] = '\0';
+	places.assign(buf);
 	delete buf;
 	
 	
-	return Commitment(start, end, startT, endT, rep, note, url);
+	return Commitment(start, end, startT, endT, rep, note, url, places);
 }
  /**
  	The following methods are getters
@@ -139,4 +147,8 @@ const Time& Commitment::getStartTime() const {
 
 const std::string& Commitment::getUrl() const {
 	return url;
+}
+
+const std::string& Commitment::getPlace() const {
+	return place;
 }

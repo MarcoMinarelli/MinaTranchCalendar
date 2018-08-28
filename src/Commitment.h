@@ -24,9 +24,9 @@ public:
 
 
 	explicit Commitment(Date start, Date end, Time startT, Time endT, bool repeat,
-			std::string note, std::string u, std::list< std::shared_ptr<User> > users) throw (std::runtime_error);
+			std::string note, std::string u, std::string places, std::list< std::shared_ptr<User> > users) throw (std::runtime_error);
 	explicit Commitment(Date start, Date end, Time strartT, Time endT, bool repeat,
-				std::string note, std::string u) throw (std::runtime_error);
+				std::string note, std::string u, std::string places) throw (std::runtime_error);
 	~Commitment() { };
 	const Date& getEndDate() const;
 	const Time& getEndTime() const;
@@ -36,6 +36,7 @@ public:
 	const Date& getStartDate() const;
 	const Time& getStartTime() const;
 	const std::string& getUrl() const;
+	const std::string& getPlace() const;
 	bool operator == (const Commitment& right) const;
 	void save(std::ofstream& outfile);
 	static Commitment load(std::ifstream& infile);
@@ -48,6 +49,7 @@ private:
 	bool repeated;
 	std::string notes;
 	std::string url;
+	std::string place;
 	std::list< std::shared_ptr<User> > involvedUsers;
 };
 

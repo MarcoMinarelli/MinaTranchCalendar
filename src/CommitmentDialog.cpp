@@ -6,11 +6,12 @@
 #include "Time.h"
 #include "Date.h"
 
-CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn(Date(1, 1, 2001), Date(2, 2, 2002), Time(3, 3, 03), Time(4, 4, 04), false, " ", " "  ){
+CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn(Date(1, 1, 2001), Date(2, 2, 2002), Time(3, 3, 03), Time(4, 4, 04), false, " ", " ", " "  ){
 
 	
 	noteLabel = new QLabel("Note of the Commitment");
    	urlLabel = new QLabel("URL of the Commitment");
+   	placeLabel = new QLabel("Place");
     startLabel = new QLabel("Start Date of the Commitment");
     endLabel = new QLabel("End Date of the Commitment");
     startTimeLabel = new QLabel("Start Time of the Commitment");
@@ -18,6 +19,7 @@ CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn
     
     noteEdit = new QLineEdit;
     urlEdit = new QLineEdit;
+    placeEdit = new QLineEdit;
     startCal = new QCalendarWidget;
     endCal = new QCalendarWidget;
     startTimeEdit = new QLineEdit;
@@ -63,7 +65,8 @@ void CommitmentDialog::verify(){
 			Time endT = Time::fromString(endTimeEdit->text().toUtf8().constData());
 			std::string note = noteEdit->text().toUtf8().constData();
 			std::string url = urlEdit->text().toUtf8().constData();
-			Commitment c(start, end, startT, endT, false, note, url );
+			std::string place = placeEdit->text().toUtf8().constData();
+			Commitment c(start, end, startT, endT, false, note, url, place );
 			this->toReturn = c;
 			accept();
 		    return;
@@ -87,6 +90,8 @@ CommitmentDialog::~CommitmentDialog(){
 	delete noteEdit;
 	delete urlLabel;
 	delete urlEdit;
+	delete placeLabel;
+	delete placeEdit;
 	delete startLabel;
 	delete startCal;
 	delete endLabel;
@@ -106,15 +111,17 @@ void CommitmentDialog::setupUi(){
 	mainLayout->addWidget(noteEdit, 1, 1);
 	mainLayout->addWidget(urlLabel, 2, 0);
 	mainLayout->addWidget(urlEdit, 2, 1);
-	mainLayout->addWidget(startLabel, 3, 0);
-	mainLayout->addWidget(startCal, 3, 1);
-	mainLayout->addWidget(endLabel, 4, 0);
-	mainLayout->addWidget(endCal, 4, 1);
-	mainLayout->addWidget(startTimeLabel, 5, 0);
-	mainLayout->addWidget(startTimeEdit, 5, 1);
-	mainLayout->addWidget(endTimeLabel, 6, 0);
-	mainLayout->addWidget(endTimeEdit, 6, 1);
-	mainLayout->addWidget(buttonBox, 7, 0, 7, 1);
+	mainLayout->addWidget(placeLabel, 3, 0);
+	mainLayout->addWidget(placeEdit, 3, 1);
+	mainLayout->addWidget(startLabel, 4, 0);
+	mainLayout->addWidget(startCal, 4, 1);
+	mainLayout->addWidget(endLabel, 5, 0);
+	mainLayout->addWidget(endCal, 5, 1);
+	mainLayout->addWidget(startTimeLabel, 6, 0);
+	mainLayout->addWidget(startTimeEdit, 6, 1);
+	mainLayout->addWidget(endTimeLabel, 7, 0);
+	mainLayout->addWidget(endTimeEdit, 7, 1);
+	mainLayout->addWidget(buttonBox, 8, 0, 8, 1);
 	this->setLayout(mainLayout);	
 
 }
