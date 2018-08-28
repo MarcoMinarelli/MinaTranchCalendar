@@ -19,6 +19,7 @@ ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, std::sh
 	showButton = new QPushButton("Show selected task");
 	importantButton = new QPushButton("Add to Important Task");
 	titleLabel = new QLabel( QString::fromStdString( activities->getName() ) );
+	descLabel = new QLabel( QString::fromStdString( activities->getDescription() ) );
 	titleLabel->setAlignment(Qt::AlignCenter);
 	activities->attach(this);
 	setupUI();
@@ -41,6 +42,7 @@ void ActivityListWidget::setActivityList(std::shared_ptr<ActivityList> al){
 		importantButton->setVisible(false);
 	}
 	titleLabel->setText( QString::fromStdString( activities->getName() ) );
+	descLabel->setText (  QString::fromStdString( activities->getDescription() ) );
 }
 
 /**
@@ -87,6 +89,7 @@ void ActivityListWidget::setupUI(){
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	QHBoxLayout *underLayout = new QHBoxLayout;
 	mainLayout->addWidget(titleLabel);
+	mainLayout->addWidget(descLabel);
 	mainLayout->addWidget(treeView);
 	underLayout->addWidget(addButton);
 	underLayout->addWidget(removeButton);

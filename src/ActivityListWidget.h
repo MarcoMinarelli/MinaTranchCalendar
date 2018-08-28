@@ -47,6 +47,7 @@ private:
 	std::shared_ptr<User> user;
 	
 	QLabel* titleLabel;
+	QLabel* descLabel;
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;

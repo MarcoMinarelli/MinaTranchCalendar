@@ -86,12 +86,13 @@ void MainWindow::handleRemoveButton(){
 
 void MainWindow::handleChangeSelectedItem(){
 	//get the first selected item
-	std::string selected = listWidget->selectedItems().at(0)->text().toUtf8().constData();
-	
-	for(auto it : user->getActivityLists()){
-		if(it->getName() == selected){
-			alw->setActivityList(it);
-			break;
+	if( listWidget->selectedItems().size() > 0){
+		std::string selected = listWidget->selectedItems().at(0)->text().toUtf8().constData();
+		for(auto it : user->getActivityLists()){
+			if(it->getName() == selected){
+				alw->setActivityList(it);
+				break;
+			}
 		}
 	}
 }
