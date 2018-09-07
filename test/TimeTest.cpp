@@ -11,12 +11,12 @@ TEST(Time, Constructor) {
 
 
 TEST(Time, ExceptionThrows){
-	try{
-		Time t(-1, 42, 00);
-		FAIL() << "Expected std::runtime_error"; 
-	}catch(std::runtime_error const & err){
-		EXPECT_EQ(err.what(),std::string("Error in number of hours"));
-	}
+		EXPECT_THROW(Time t(-1, 42, 00), std::runtime_error );
+		EXPECT_THROW(Time t(100, 42, 00), std::runtime_error );
+		EXPECT_THROW(Time t(1, -1, 00), std::runtime_error );
+		EXPECT_THROW(Time t(1, 100, 00), std::runtime_error );
+		EXPECT_THROW(Time t(1, 42, -1), std::runtime_error );
+		EXPECT_THROW(Time t(1, 42, 100), std::runtime_error );
 }
 
 TEST(Time, fromString){

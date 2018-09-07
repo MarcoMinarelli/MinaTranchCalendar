@@ -29,26 +29,13 @@ TEST(Date, fromString) {
 
 
 TEST(Date, ExceptionThrows){
-	try{
-		Date d(123, 02, 2018);
-		FAIL() << "Expected std::runtime_error";
-	}catch(std::runtime_error const & err){
-		EXPECT_EQ(err.what(),std::string("Error in number of days"));
-	}
-	
-	try{
-		Date d(1, -1, 2018);
-		FAIL() << "Expected std::runtime_error";
-	}catch(std::runtime_error const & err){
-		EXPECT_EQ(err.what(),std::string("Error in month number"));
-	}
-	
-	try{
-		Date d(1, 29, 2016);
-		d.setYear(2018);
-		FAIL() << "Expected std::runtime_error";
-	}catch(std::runtime_error const & err){
-		EXPECT_EQ(err.what(),std::string("Error in month number"));
-	}
+		EXPECT_THROW(Date d(-1, 02, 2018), std::runtime_error ) ;
+		EXPECT_THROW(Date d(123, 02, 2018), std::runtime_error ) ;
+		EXPECT_THROW(Date d(11, -2, 2018), std::runtime_error ) ;
+		EXPECT_THROW(Date d(11, 13, 2018), std::runtime_error ) ;
+		EXPECT_THROW(Date d(11, 02, -1), std::runtime_error ) ;
+		Date d(29, 02, 2016);
+		EXPECT_THROW( d.setYear(2018), std::runtime_error );
+		
 }
 
