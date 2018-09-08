@@ -33,7 +33,7 @@ private slots:
 	void handleAddButton();
 	void handleRemoveButton();
 	void handleImportantButton();
-	void handleChangeSelectedItem();
+	void handleChangeSelectedItem(QTreeWidgetItem * item, int col);
 	
 private:
 
@@ -51,7 +51,6 @@ private:
 	QTreeWidget* treeView;
 	QPushButton* addButton;
 	QPushButton* removeButton;
-	QPushButton* showButton;
 	QPushButton* importantButton;
 	QVBoxLayout* mainLayout;
 	QHBoxLayout* underLayout;

@@ -29,7 +29,7 @@ public:
 private slots:
 	void handleAddButton();
 	void handleRemoveButton();
-	void handleChangeSelectedItem();
+	void handleChangeSelectedItem(QListWidgetItem * item);
 	
 private:
 	void setupUI();
@@ -40,13 +40,14 @@ private:
 	QListWidget *listWidget;
 	QPushButton *addButton;
 	QPushButton *removeButton;
-	QPushButton *showButton;
 	QWidget *mainWid;
 	QVBoxLayout* leftLayout;
 	QHBoxLayout* mainLayout;
 	
 	
 	std::shared_ptr<User> user;
+	std::shared_ptr<ActivityList> acList;
+	std::shared_ptr<ActivityList> impList;
 	std::shared_ptr<UserController> userController;
 };
 

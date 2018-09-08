@@ -17,6 +17,8 @@
  * @param aYear: the year
  */
 Date::Date(int aDay, int aMonth, int aYear) throw (std::runtime_error){
+	if(aYear < 0)
+		throw std::runtime_error("Year < 0");
 	if(aDay < 0)
 		throw std::runtime_error("Days < 0");
 	if(aMonth < 0 || aMonth > 12)
@@ -57,33 +59,29 @@ int Date::getYear() const{
 
 int Date::getMaxDays(int year) {
     short unsigned int maxDay = 31;
-    switch(month) {
+    switch(this->month) {
         case 4: //April
         case 6: //June
         case 8: //September
         case 11: //November
             maxDay = 30;
             break;
-        case 2:{
-            //TODO vedere se utile e possibile mettere insieme alcune condizioni
+       case 2:{
             //https://en.wikipedia.org/wiki/Leap_year#Algorithm
-            if(this->year % 4 != 0 ){
-                maxDay = 28;
-                break;
-            }else if(this->year % 100 !=0){
-                maxDay = 29;
-                break;
-            }else if (this->year % 400 != 0){
-                maxDay = 28;
-                break;
-            }else{
-                maxDay = 29;
-                break;
+           if (year % 4 == 0){
+           	if (year % 100 == 0){
+           		if (year % 400 == 0){
+		            maxDay = 29;
+		        }else{
+		            maxDay = 28;
+        		}
+        	}else{
+            	maxDay = 29;
             }
+			}else{
+		    	maxDay = 28;
+		    }
         }
-        //FIXME si puo' rimuovere per me il caso di defaul essendo inizializzato in precedenza
-        default:
-            maxDay = 31;
     }
     return maxDay;
 }
@@ -150,9 +148,9 @@ void Date::setMonth(int month) throw (std::runtime_error){
 }
 
 void Date::setYear(int year) throw (std::runtime_error){
-    if(day > getMaxDays(year))
+    if(this->day > getMaxDays(year))
     	throw std::runtime_error("Error in day after year modify");
-    Date::year = year;
+    this->year = year;
 }
 
 /**

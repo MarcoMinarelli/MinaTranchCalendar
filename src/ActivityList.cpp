@@ -9,7 +9,7 @@
 	@param desc: a list description
 */
 ActivityList::ActivityList(std::string n, std::string desc):
-	name(n), description(desc)
+	name(n), description(desc), observers()
 {
 	std::multimap<Date, Commitment> commitments;
 }
@@ -59,7 +59,8 @@ void ActivityList::detach(Observer * o){
 	observers.remove( o );
 }
 
-void ActivityList::notify() const{
+void ActivityList::notify() const{  
+	//std::cout << name << " obs " << observers.size() << std::endl;
 	for(auto obs : observers){
 		obs->update();
 	}

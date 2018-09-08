@@ -33,8 +33,8 @@ CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn
     endCal->setMaximumDate(QDate(3000, 1, 1));
     endCal->setGridVisible(true);
     
-    dateValidator = new QRegExpValidator( QRegExp("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"), this );
-    urlValidator = new QRegExpValidator ( QRegExp("^www\\.[\\w]+\\.[a-z]{3}$"), this); 
+    dateValidator = new QRegExpValidator( QRegExp("^(?:[012][0123]):(?:[012345]\\d):?(?:[012345]\\d)?$"), this );
+    urlValidator = new QRegExpValidator ( QRegExp("^(http::\\/\\/|https\\/\\/)?www\.[\\w]+\\.[a-z]{2,3}(\\/\\w*)?$"), this); 
     
     
     startTimeEdit->setValidator(dateValidator);
@@ -55,12 +55,18 @@ void CommitmentDialog::verify(){
 		}else if(urlEdit->text().isEmpty()){
 			QMessageBox::warning(this, tr("Error"), tr( "The Commitment URL is empty" ));
 		}else if(startTimeEdit->text().isEmpty()){
-			QMessageBox::warning(this, tr("Error"), tr( "The Start Date is empty" ));
+			QMessageBox::warning(this, tr("Error"), tr( "The Start Time is empty" ));
 		}else if(endTimeEdit->text().isEmpty()){
-			QMessageBox::warning(this, tr("Error"), tr( "The End Date is empty" ));
+			QMessageBox::warning(this, tr("Error"), tr( "The End Time is empty" ));
 		}else{
 			Date start(startCal->selectedDate().day(), startCal->selectedDate().month(), startCal->selectedDate().year());
 			Date end(endCal->selectedDate().day(), endCal->selectedDate().month(), endCal->selectedDate().year());
+			if(startTimeEdit->text().size() == 5){
+				startTimeEdit->setText(startTimeEdit->text().append(":00"));
+			}
+			if(endTimeEdit->text().size() == 5){
+				endTimeEdit->setText(endTimeEdit->text().append(":00"));
+			}
 			Time startT = Time::fromString(startTimeEdit->text().toUtf8().constData());
 			Time endT = Time::fromString(endTimeEdit->text().toUtf8().constData());
 			std::string note = noteEdit->text().toUtf8().constData();

@@ -16,7 +16,6 @@ ActivityListWidget::ActivityListWidget(std::shared_ptr<ActivityList> al, std::sh
 	fillTree();
 	addButton = new QPushButton("Add a task");
 	removeButton = new QPushButton("Remove a task");
-	showButton = new QPushButton("Show selected task");
 	importantButton = new QPushButton("Add to Important Task");
 	titleLabel = new QLabel( QString::fromStdString( activities->getName() ) );
 	descLabel = new QLabel( QString::fromStdString( activities->getDescription() ) );
@@ -51,7 +50,7 @@ void ActivityListWidget::setActivityList(std::shared_ptr<ActivityList> al){
 void ActivityListWidget::setupListeners(){
 	connect(addButton, SIGNAL (released()), this, SLOT (handleAddButton()));
 	connect(removeButton, SIGNAL (released()), this, SLOT (handleRemoveButton()));
-	connect(showButton, SIGNAL(released()), this, SLOT(handleChangeSelectedItem()));
+	connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)), this, SLOT(handleChangeSelectedItem(QTreeWidgetItem *, int)));
 	connect(importantButton, SIGNAL(released()), this, SLOT(handleImportantButton()));
 }
 
@@ -94,7 +93,6 @@ void ActivityListWidget::setupUI(){
 	mainLayout->addWidget(treeView);
 	underLayout->addWidget(addButton);
 	underLayout->addWidget(removeButton);
-	underLayout->addWidget(showButton);
 	underLayout->addWidget(importantButton);
 	importantButton->setVisible(false);
 	mainLayout->addLayout(underLayout);
@@ -109,7 +107,6 @@ ActivityListWidget::~ActivityListWidget(){
 	delete treeView;
 	delete removeButton;
 	delete addButton;
-	delete showButton;
 	delete importantButton;
 	delete mainLayout;
 	delete underLayout;
@@ -132,27 +129,25 @@ void ActivityListWidget::handleAddButton(){
 
 void ActivityListWidget::handleRemoveButton(){
 	QList <QTreeWidgetItem *> items = treeView->selectedItems();
-	
-	for(auto it : items){
-		//the commitment that will be deleted is reconstructed using the data inside the cells 
+	if(items.size() > 0){
+		for(auto it : items){
+			//the commitment that will be deleted is reconstructed using the data inside the cells 
 		
-		Commitment c(Date::fromString(it->text(1).toUtf8().constData() ), //start date
-					Date::fromString( it->text(3).toUtf8().constData() ), //end date
-					Time::fromString( it->text(2).toUtf8().constData() ), //start time
-					Time::fromString( it->text(4).toUtf8().constData() ), //end time
-					false, //repeat
-					it->text(0).toUtf8().constData() , //notes
-					it->text(5).toUtf8().constData(), //url
-					it->text(6).toUtf8().constData() //place
-					);
-		activityController->remove(c); 
+			Commitment c(Date::fromString(it->text(1).toUtf8().constData() ), //start date
+						Date::fromString( it->text(3).toUtf8().constData() ), //end date
+						Time::fromString( it->text(2).toUtf8().constData() ), //start time
+						Time::fromString( it->text(4).toUtf8().constData() ), //end time
+						false, //repeat
+						it->text(0).toUtf8().constData() , //notes
+						it->text(5).toUtf8().constData(), //url
+						it->text(6).toUtf8().constData() //place
+						);
+			activityController->remove(c); 
+		}
 	}
 }
 
-void ActivityListWidget::handleChangeSelectedItem(){
-	//get the first selected item
-	if( treeView->selectedItems().size() > 0){
-		QTreeWidgetItem *selected = treeView->selectedItems().at(0);
+void ActivityListWidget::handleChangeSelectedItem(QTreeWidgetItem * selected, int col){
 		QMessageBox::about( this, "Commitment data", 
 					"Start Date: " + selected->text(1) + " <br>" +
 					"Start Time: " + selected->text(2) + " <br>" +
@@ -163,21 +158,24 @@ void ActivityListWidget::handleChangeSelectedItem(){
 					"Place: " + selected->text(6) + " <br>"
 					 
 		);
-	}
+	
 }
 
 
 void ActivityListWidget::handleImportantButton(){
-	QTreeWidgetItem *selected = treeView->selectedItems().at(0);
-	Commitment c(Date::fromString( selected->text(1).toUtf8().constData() ), //start date
-					Date::fromString( selected->text(3).toUtf8().constData() ), //end date
-					Time::fromString( selected->text(2).toUtf8().constData() ), //start time
-					Time::fromString( selected->text(4).toUtf8().constData() ), //end time
-					false, //repeat
-					selected->text(0).toUtf8().constData() , //notes
-					selected->text(5).toUtf8().constData(), //url
-					selected->text(6).toUtf8().constData() //place
-					);
-	// adds the Commitment to the user important tasks 
-	user->getActivityLists().at(0)->addCommitment(c);
+
+	if(treeView->selectedItems().size() > 0){
+		QTreeWidgetItem *selected = treeView->selectedItems().at(0);
+		Commitment c(Date::fromString( selected->text(1).toUtf8().constData() ), //start date
+						Date::fromString( selected->text(3).toUtf8().constData() ), //end date
+						Time::fromString( selected->text(2).toUtf8().constData() ), //start time
+						Time::fromString( selected->text(4).toUtf8().constData() ), //end time
+						false, //repeat
+						selected->text(0).toUtf8().constData() , //notes
+						selected->text(5).toUtf8().constData(), //url
+						selected->text(6).toUtf8().constData() //place
+						);
+		// adds the Commitment to the user important tasks 
+		user->getActivityLists().at(0)->addCommitment(c);
+	}
 }
