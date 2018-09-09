@@ -102,14 +102,14 @@ void ActivityListWidget::setupUI(){
 
 ActivityListWidget::~ActivityListWidget(){
 	activities->detach(this);
-	delete titleLabel;
-	delete descLabel;
-	delete treeView;
-	delete removeButton;
-	delete addButton;
-	delete importantButton;
-	delete mainLayout;
-	delete underLayout;
+	//delete titleLabel;
+	//delete descLabel;
+	//delete treeView;
+	//delete removeButton;
+	//delete addButton;
+	//delete importantButton;
+	//delete mainLayout;
+	//delete underLayout;
 }
 
 QSize ActivityListWidget::sizeHint() const{

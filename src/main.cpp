@@ -18,9 +18,8 @@ int main(int argc, char **argv){
 	QApplication app (argc, argv);
 	std::shared_ptr<User> ptr(new User);
 	std::shared_ptr<UserController> controllerPtr(new UserController(ptr) );
-	MainWindow *newWindow= new MainWindow(ptr, controllerPtr);
-	newWindow->setAttribute(Qt::WA_DeleteOnClose);
-    newWindow->show();
+	MainWindow newWindow(ptr, controllerPtr);
+    newWindow.show();
     
  	return app.exec();
 }

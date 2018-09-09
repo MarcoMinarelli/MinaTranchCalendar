@@ -20,7 +20,7 @@ MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> 
 	alw = new ActivityListWidget(user->getActivityLists().at(0), alc, user);
 	impList = user->getActivityLists().at(0);
 	
-	if(user->getActivityLists().size() > 2){ //if there are more than one list, the second lsit is taken as counter list
+	if(user->getActivityLists().size() >= 2){ //if there are more than one list, the second lsit is taken as counter list
 		acList = user->getActivityLists().at(1);
 		acList->attach(this);
 	}
@@ -42,15 +42,17 @@ MainWindow::MainWindow(std::shared_ptr<User> u, std::shared_ptr<UserController> 
 
 MainWindow::~MainWindow(){
 	user->detach(this);
-	acList->detach(this);
+	if(acList != nullptr){
+		acList->detach(this);
+	}
 	impList->detach(this);
-	delete alw;
-	delete listWidget;
-	delete addButton;
-	delete removeButton;
-	delete mainWid;
-	delete leftLayout;
-	delete mainLayout;
+	//delete alw;
+	//delete listWidget;
+	//delete addButton;
+	//delete removeButton;
+	//delete mainWid;
+	//delete leftLayout;
+	//delete mainLayout;
 }
 
 /**

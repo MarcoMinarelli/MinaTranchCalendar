@@ -38,6 +38,7 @@ void User::load(){
 			infile.read( buf, strSize);
 			buf[strSize] = '\0';
 			name.assign(buf);
+			delete[] buf;
 			
 			//desc reading
 			infile.read( reinterpret_cast<char *>( &strSize), sizeof(int)); // read string size
@@ -45,7 +46,7 @@ void User::load(){
 			infile.read( buf, strSize);
 			buf[strSize] = '\0';
 			desc.assign(buf);
-			delete buf;
+			delete[] buf;
 			
 			std::shared_ptr<ActivityList> toAdd = std::make_shared<ActivityList> ( ActivityList(name, desc)); //the pointer to ActivityList is created 
 			infile.read( reinterpret_cast<char *> (&commNumber), sizeof(int)); //the number of commitments is read

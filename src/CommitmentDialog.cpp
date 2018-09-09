@@ -33,8 +33,8 @@ CommitmentDialog::CommitmentDialog( QWidget *parent) : QDialog(parent), toReturn
     endCal->setMaximumDate(QDate(3000, 1, 1));
     endCal->setGridVisible(true);
     
-    dateValidator = new QRegExpValidator( QRegExp("^(?:[012][0123]):(?:[012345]\\d):?(?:[012345]\\d)?$"), this );
-    urlValidator = new QRegExpValidator ( QRegExp("^(http::\\/\\/|https\\/\\/)?www\.[\\w]+\\.[a-z]{2,3}(\\/\\w*)?$"), this); 
+    dateValidator = new QRegExpValidator( QRegExp("^(?:[012][0-9]):(?:[012345]\\d):?(?:[012345]\\d)?$"), this );
+    urlValidator = new QRegExpValidator ( QRegExp("^(http::\\/\\/|https\\/\\/)?www\\.[\\w]+\\.[a-z]{2,3}(\\/\\w*)?$"), this); 
     
     
     startTimeEdit->setValidator(dateValidator);

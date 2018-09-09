@@ -99,6 +99,7 @@ Commitment Commitment::load(std::ifstream& infile){
 	infile.read( buf, size);
 	buf[size] = '\0';
 	note.assign(buf);
+	delete[] buf;
 	infile.read( reinterpret_cast<char *>( &size), sizeof(int)); // read string size
 	buf = new char[size+1];
 	infile.read( buf, size);
@@ -109,7 +110,7 @@ Commitment Commitment::load(std::ifstream& infile){
 	infile.read( buf, size);
 	buf[size] = '\0';
 	places.assign(buf);
-	delete buf;
+	delete[] buf;
 	
 	
 	return Commitment(start, end, startT, endT, rep, note, url, places);
