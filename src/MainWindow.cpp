@@ -89,12 +89,13 @@ void MainWindow::handleAddButton(){
 
 void MainWindow::handleRemoveButton(){
 	if(listWidget->selectedItems().size() > 0){
-		QListWidgetItem * selected = listWidget->selectedItems().at(0);
-			if(selected->text() != QString::fromStdString("Important Tasks")){
+		QListWidgetItem * selectedItem = listWidget->selectedItems().at(0);
+		std::string selected = selectedItem->text().toUtf8().constData();
+		selected = selected.substr(0, selected.find('('));
+			if(selected != ("Important Tasks")){
 				alw->setActivityList(impList);
 				acList->detach(this);
-				std::string toDel = selected->text().toUtf8().constData();
-				userController->removeList(toDel.substr(0, toDel.find('(')));
+				userController->removeList(selected);
 			}else{
 				QMessageBox::about(this, "Impossible delete Activity List", "Impossible delete this Activity List");
 			}
@@ -103,7 +104,6 @@ void MainWindow::handleRemoveButton(){
 
 
 void MainWindow::handleChangeSelectedItem(QListWidgetItem * item){
-	//get the first selected item
 		std::string selected = item->text().toUtf8().constData();
 		selected = selected.substr(0, selected.find('('));
 		for(auto it : user->getActivityLists()){
