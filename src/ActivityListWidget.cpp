@@ -71,7 +71,7 @@ void ActivityListWidget::fillTree(){
 		}else if (it.second.getEndDate() < tod ){
 			treeItem->setText(0,  "Passed");
 			treeItem->setForeground(0, QBrush( QColor(Qt::red) ) ) ;
-		}else if(it.second.getStartDate() < tod && tod < it.second.getEndDate() ){
+		}else if( (it.second.getStartDate() < tod || it.second.getStartDate() == tod) && (tod < it.second.getEndDate()  || tod == it.second.getEndDate()) ){
 			treeItem->setText(0, "To do now" );
 			treeItem->setForeground(0, QBrush( QColor(Qt::blue) ) ) ;
 		}
@@ -169,14 +169,14 @@ void ActivityListWidget::handleImportantButton(){
 
 	if(treeView->selectedItems().size() > 0){
 		QTreeWidgetItem *selected = treeView->selectedItems().at(0);
-		Commitment c(Date::fromString( selected->text(1).toUtf8().constData() ), //start date
-						Date::fromString( selected->text(3).toUtf8().constData() ), //end date
-						Time::fromString( selected->text(2).toUtf8().constData() ), //start time
-						Time::fromString( selected->text(4).toUtf8().constData() ), //end time
+		Commitment c(Date::fromString( selected->text(2).toUtf8().constData() ), //start date
+						Date::fromString( selected->text(4).toUtf8().constData() ), //end date
+						Time::fromString( selected->text(3).toUtf8().constData() ), //start time
+						Time::fromString( selected->text(5).toUtf8().constData() ), //end time
 						false, //repeat
-						selected->text(0).toUtf8().constData() , //notes
-						selected->text(5).toUtf8().constData(), //url
-						selected->text(6).toUtf8().constData() //place
+						selected->text(1).toUtf8().constData() , //notes
+						selected->text(6).toUtf8().constData(), //url
+						selected->text(7).toUtf8().constData() //place
 						);
 		// adds the Commitment to the user important tasks 
 		user->getActivityLists().at(0)->addCommitment(c);
