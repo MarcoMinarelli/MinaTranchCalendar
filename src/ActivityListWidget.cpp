@@ -60,17 +60,28 @@ void ActivityListWidget::setupListeners(){
 void ActivityListWidget::fillTree(){
 	treeView->clear();
 	treeView->setItemsExpandable(false) ;
-	treeView->setHeaderLabels(QStringList() << "Notes " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url" << "Place"); 
+	treeView->setHeaderLabels(QStringList() << "Status" << "Notes " << "Start Date" << "Start Time" << "End Date" << "End Time" << "Url" << "Place"); 
+	Date tod = Date::today();
+	
 	for(auto it : activities->getCommitments() ){
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
-
-		treeItem->setText(0,  QString::fromStdString (it.second.getNotes()) );
-		treeItem->setText(1,  QString::fromStdString (it.second.getStartDate().toString() ) );
-		treeItem->setText(2,  QString::fromStdString (it.second.getStartTime().toString() ) );
-		treeItem->setText(3,  QString::fromStdString (it.second.getEndDate().toString() ) );
-		treeItem->setText(4,  QString::fromStdString (it.second.getEndTime().toString() ) );
-		treeItem->setText(5,  QString::fromStdString (it.second.getUrl()) );
-		treeItem->setText(6,  QString::fromStdString (it.second.getPlace()) );
+		if(tod < it.second.getStartDate()  ){
+			treeItem->setText(0,  "To do" );
+			treeItem->setForeground(0, QBrush( QColor(Qt::green) ) ) ;
+		}else if (it.second.getEndDate() < tod ){
+			treeItem->setText(0,  "Passed");
+			treeItem->setForeground(0, QBrush( QColor(Qt::red) ) ) ;
+		}else if(it.second.getStartDate() < tod && tod < it.second.getEndDate() ){
+			treeItem->setText(0, "To do now" );
+			treeItem->setForeground(0, QBrush( QColor(Qt::blue) ) ) ;
+		}
+		treeItem->setText(1,  QString::fromStdString (it.second.getNotes()) );
+		treeItem->setText(2,  QString::fromStdString (it.second.getStartDate().toString() ) );
+		treeItem->setText(3,  QString::fromStdString (it.second.getStartTime().toString() ) );
+		treeItem->setText(4,  QString::fromStdString (it.second.getEndDate().toString() ) );
+		treeItem->setText(5,  QString::fromStdString (it.second.getEndTime().toString() ) );
+		treeItem->setText(6,  QString::fromStdString (it.second.getUrl()) );
+		treeItem->setText(7,  QString::fromStdString (it.second.getPlace()) );
 		
 		treeView->addTopLevelItem(treeItem);
 	}
@@ -102,14 +113,6 @@ void ActivityListWidget::setupUI(){
 
 ActivityListWidget::~ActivityListWidget(){
 	activities->detach(this);
-	//delete titleLabel;
-	//delete descLabel;
-	//delete treeView;
-	//delete removeButton;
-	//delete addButton;
-	//delete importantButton;
-	//delete mainLayout;
-	//delete underLayout;
 }
 
 QSize ActivityListWidget::sizeHint() const{
@@ -133,14 +136,14 @@ void ActivityListWidget::handleRemoveButton(){
 		for(auto it : items){
 			//the commitment that will be deleted is reconstructed using the data inside the cells 
 		
-			Commitment c(Date::fromString(it->text(1).toUtf8().constData() ), //start date
-						Date::fromString( it->text(3).toUtf8().constData() ), //end date
-						Time::fromString( it->text(2).toUtf8().constData() ), //start time
-						Time::fromString( it->text(4).toUtf8().constData() ), //end time
+			Commitment c(Date::fromString(it->text(2).toUtf8().constData() ), //start date
+						Date::fromString( it->text(4).toUtf8().constData() ), //end date
+						Time::fromString( it->text(3).toUtf8().constData() ), //start time
+						Time::fromString( it->text(5).toUtf8().constData() ), //end time
 						false, //repeat
-						it->text(0).toUtf8().constData() , //notes
-						it->text(5).toUtf8().constData(), //url
-						it->text(6).toUtf8().constData() //place
+						it->text(1).toUtf8().constData() , //notes
+						it->text(6).toUtf8().constData(), //url
+						it->text(7).toUtf8().constData() //place
 						);
 			activityController->remove(c); 
 		}
